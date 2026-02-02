@@ -279,8 +279,8 @@
                 <p class="text-xs text-gray-500 mt-1">CAGR</p>
               </div>
               <div class="text-center p-3 bg-surface-50 rounded-xl">
-                <p class="stat-value text-gray-900" id="quad-val">--</p>
-                <p class="text-xs text-gray-500 mt-1">Macro</p>
+                <p class="stat-value text-blue-600 text-lg" id="quad-val" style="font-size: 1.1rem;">--</p>
+                <p class="text-xs text-gray-500 mt-1">Macro Phase</p>
               </div>
             </div>
             
@@ -551,73 +551,72 @@
     </div>
   </section>
 
-  <!-- Quad Macro Overlay Section -->
+  <!-- Macro Regime Section -->
   <section class="py-24 px-6 bg-gradient-to-b from-white to-surface-50">
     <div class="max-w-6xl mx-auto">
       <div class="grid lg:grid-cols-2 gap-16 items-center">
         <div>
           <p class="section-label mb-4">MACRO OVERLAY</p>
           <h2 class="text-4xl lg:text-5xl font-serif text-gray-900 leading-tight mb-6">
-            The Quad Framework:<br><span class="italic">Context for Your Capital</span>
+            Macro Regime:<br><span class="italic">Context for Your Capital</span>
           </h2>
           <p class="text-lg text-gray-600 mb-6">
-            FRAR tells you <em>how much</em> risk to take. The Quad tells you <em>where</em> to take it.
+            FRAR tells you <em>how much</em> risk to take. The Macro Regime tells you <em>where</em> to take it.
           </p>
           <p class="text-gray-600 mb-6">
-            The Quad framework classifies the macro environment into four regimes based on the <strong>direction of change</strong> in growth and inflation—not absolute levels. Each quadrant favors different sectors and asset classes:
+            We classify the economic environment using the <strong>rate of change</strong> in growth and inflation—not absolute levels. This creates four distinct phases, each favoring different sectors:
           </p>
           <ul class="space-y-3 text-gray-600">
             <li class="flex items-start gap-3">
-              <span class="w-6 h-6 rounded bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm flex-shrink-0">1</span>
-              <span><strong>Q1 Goldilocks</strong> — Growth accelerating, inflation falling. Best for: Tech, growth stocks, long-duration assets.</span>
+              <span class="w-6 h-6 rounded bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm flex-shrink-0">●</span>
+              <span><strong>Goldilocks</strong> — Growth accelerating, inflation falling. Favors: Tech, growth stocks, long-duration assets.</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="w-6 h-6 rounded bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-sm flex-shrink-0">2</span>
-              <span><strong>Q2 Reflation</strong> — Growth accelerating, inflation rising. Best for: Cyclicals, commodities, financials.</span>
+              <span class="w-6 h-6 rounded bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-sm flex-shrink-0">●</span>
+              <span><strong>Reflation</strong> — Growth accelerating, inflation rising. Favors: Cyclicals, commodities, financials.</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="w-6 h-6 rounded bg-red-100 flex items-center justify-center text-red-700 font-bold text-sm flex-shrink-0">3</span>
-              <span><strong>Q3 Stagflation</strong> — Growth decelerating, inflation rising. Best for: Energy, defensives, cash. Avoid bonds.</span>
+              <span class="w-6 h-6 rounded bg-red-100 flex items-center justify-center text-red-700 font-bold text-sm flex-shrink-0">●</span>
+              <span><strong>Stagflation</strong> — Growth decelerating, inflation rising. Favors: Energy, defensives, cash. Avoid bonds.</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="w-6 h-6 rounded bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-sm flex-shrink-0">4</span>
-              <span><strong>Q4 Deflation</strong> — Growth decelerating, inflation falling. Best for: Treasuries, utilities, quality. Risk-off.</span>
+              <span class="w-6 h-6 rounded bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-sm flex-shrink-0">●</span>
+              <span><strong>Deflation</strong> — Growth decelerating, inflation falling. Favors: Treasuries, utilities, quality.</span>
             </li>
           </ul>
+          <p class="text-sm text-gray-500 mt-6">
+            Signals derived from FRED economic data (industrial production, payrolls, retail sales, CPI, PCE).
+          </p>
         </div>
         
         <div>
-          <!-- Quad Visualization -->
+          <!-- Macro Regime Visualization -->
           <div class="preview-card p-8">
-            <h4 class="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider mb-6">The Four Quadrants</h4>
+            <h4 class="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider mb-6">Economic Cycle Phases</h4>
             <div class="grid grid-cols-2 gap-4">
               <div class="p-6 bg-blue-50 rounded-xl border-2 border-blue-200 text-center">
-                <p class="text-2xl font-bold text-blue-700">Q1</p>
-                <p class="text-lg font-semibold text-blue-600">Goldilocks</p>
+                <p class="text-lg font-semibold text-blue-700">Goldilocks</p>
                 <p class="text-sm text-gray-500 mt-2">Growth ↑ Inflation ↓</p>
                 <p class="text-xs text-blue-600 mt-3 font-medium">Tech • Growth • Duration</p>
               </div>
               <div class="p-6 bg-amber-50 rounded-xl border-2 border-amber-200 text-center">
-                <p class="text-2xl font-bold text-amber-700">Q2</p>
-                <p class="text-lg font-semibold text-amber-600">Reflation</p>
+                <p class="text-lg font-semibold text-amber-700">Reflation</p>
                 <p class="text-sm text-gray-500 mt-2">Growth ↑ Inflation ↑</p>
                 <p class="text-xs text-amber-600 mt-3 font-medium">Cyclicals • Commodities • Financials</p>
               </div>
               <div class="p-6 bg-purple-50 rounded-xl border-2 border-purple-200 text-center">
-                <p class="text-2xl font-bold text-purple-700">Q4</p>
-                <p class="text-lg font-semibold text-purple-600">Deflation</p>
+                <p class="text-lg font-semibold text-purple-700">Deflation</p>
                 <p class="text-sm text-gray-500 mt-2">Growth ↓ Inflation ↓</p>
                 <p class="text-xs text-purple-600 mt-3 font-medium">Treasuries • Utilities • Quality</p>
               </div>
               <div class="p-6 bg-red-50 rounded-xl border-2 border-red-200 text-center">
-                <p class="text-2xl font-bold text-red-700">Q3</p>
-                <p class="text-lg font-semibold text-red-600">Stagflation</p>
+                <p class="text-lg font-semibold text-red-700">Stagflation</p>
                 <p class="text-sm text-gray-500 mt-2">Growth ↓ Inflation ↑</p>
                 <p class="text-xs text-red-600 mt-3 font-medium">Energy • Defensives • Cash</p>
               </div>
             </div>
             <div class="mt-6 pt-6 border-t border-gray-100 text-center">
-              <p class="text-sm text-gray-500">Current Quad: <span class="font-semibold text-blue-600" id="quad-current-display">Q1 Goldilocks</span></p>
+              <p class="text-sm text-gray-500">Current Phase: <span class="font-semibold text-blue-600" id="quad-current-display">Goldilocks</span></p>
               <p class="text-xs text-gray-400 mt-1">Updated monthly with FRED macro data</p>
             </div>
           </div>
@@ -699,7 +698,7 @@
         
         <div class="border-b border-gray-100 pb-8">
           <h3 class="text-lg font-semibold text-gray-900 mb-3">Why is the basic signal free?</h3>
-          <p class="text-gray-600">The monthly regime signal (LOW/MID/HIGH/CRISIS) will always be free. That's the core insight, and we want it accessible to everyone. Premium features—sector-level allocations, the Quad macro overlay, weekly signals, email alerts, and API access—are where the business model lives. Free users get the "what." Paid users get the "how" and "why."</p>
+          <p class="text-gray-600">The monthly regime signal (LOW/MID/HIGH/CRISIS) will always be free. That's the core insight, and we want it accessible to everyone. Premium features—sector-level allocations, the macro regime overlay, weekly signals, email alerts, and API access—are where the business model lives. Free users get the "what." Paid users get the "how" and "why."</p>
         </div>
         
         <div class="pb-8">
@@ -1094,7 +1093,14 @@
       document.getElementById('equity-pct').textContent = `${equityPct}%`;
       document.getElementById('sharpe-val').textContent = data.sharpe.toFixed(2);
       document.getElementById('cagr-val').textContent = `${(data.cagr * 100).toFixed(1)}%`;
-      document.getElementById('quad-val').textContent = `Q${data.quadRegime}`;
+      
+      // Macro phase names (no Q1/Q2/Q3/Q4)
+      const phaseNames = { 1: 'Goldilocks', 2: 'Reflation', 3: 'Stagflation', 4: 'Deflation' };
+      const phaseColors = { 1: 'text-blue-600', 2: 'text-amber-600', 3: 'text-red-600', 4: 'text-purple-600' };
+      const quadValEl = document.getElementById('quad-val');
+      quadValEl.textContent = phaseNames[data.quadRegime] || 'Goldilocks';
+      quadValEl.className = `stat-value ${phaseColors[data.quadRegime] || 'text-blue-600'}`;
+      quadValEl.style.fontSize = '1.1rem';
       
       // Update risk score
       document.getElementById('risk-score-val').textContent = data.riskScore.toFixed(3);
@@ -1116,16 +1122,11 @@
       document.getElementById('cta-equity-pct').textContent = equityPct;
       document.getElementById('cta-signal-date').textContent = `Signal as of ${formattedDate}`;
       
-      // Update Quad section display
-      const quadNames = { 1: 'Q1 Goldilocks', 2: 'Q2 Reflation', 3: 'Q3 Stagflation', 4: 'Q4 Deflation' };
+      // Update Macro Regime section display
       const quadDisplay = document.getElementById('quad-current-display');
       if (quadDisplay) {
-        quadDisplay.textContent = quadNames[data.quadRegime] || 'Q1 Goldilocks';
-        quadDisplay.className = 'font-semibold ' + (
-          data.quadRegime === 1 ? 'text-blue-600' :
-          data.quadRegime === 2 ? 'text-amber-600' :
-          data.quadRegime === 3 ? 'text-red-600' : 'text-purple-600'
-        );
+        quadDisplay.textContent = phaseNames[data.quadRegime] || 'Goldilocks';
+        quadDisplay.className = 'font-semibold ' + (phaseColors[data.quadRegime] || 'text-blue-600');
       }
     }
     
