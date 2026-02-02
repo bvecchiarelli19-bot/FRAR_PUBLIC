@@ -253,33 +253,33 @@
         
         <div class="relative">
           <!-- Floating Dashboard Preview -->
-          <div class="preview-card p-6 float">
+          <div class="preview-card p-6 float" id="live-signal-card">
             <div class="flex items-center justify-between mb-6">
               <div>
                 <p class="text-xs text-gray-400 uppercase tracking-wider">Current Signal</p>
-                <p class="text-sm text-gray-500">January 28, 2026</p>
+                <p class="text-sm text-gray-500" id="signal-date">Loading...</p>
               </div>
-              <span class="regime-badge regime-MID">
-                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                MID RISK
+              <span class="regime-badge regime-MID" id="regime-badge">
+                <span class="w-2 h-2 rounded-full bg-amber-500" id="regime-dot"></span>
+                <span id="regime-text">LOADING</span>
               </span>
             </div>
             
             <div class="grid grid-cols-4 gap-4 mb-6">
               <div class="text-center p-3 bg-surface-50 rounded-xl">
-                <p class="stat-value text-gray-900">80%</p>
+                <p class="stat-value text-gray-900" id="equity-pct">--%</p>
                 <p class="text-xs text-gray-500 mt-1">Equity</p>
               </div>
               <div class="text-center p-3 bg-surface-50 rounded-xl">
-                <p class="stat-value text-brand-600">0.84</p>
+                <p class="stat-value text-brand-600" id="sharpe-val">--</p>
                 <p class="text-xs text-gray-500 mt-1">Sharpe</p>
               </div>
               <div class="text-center p-3 bg-surface-50 rounded-xl">
-                <p class="stat-value text-green-600">11.3%</p>
+                <p class="stat-value text-green-600" id="cagr-val">--%</p>
                 <p class="text-xs text-gray-500 mt-1">CAGR</p>
               </div>
               <div class="text-center p-3 bg-surface-50 rounded-xl">
-                <p class="stat-value text-gray-900">Q1</p>
+                <p class="stat-value text-gray-900" id="quad-val">--</p>
                 <p class="text-xs text-gray-500 mt-1">Macro</p>
               </div>
             </div>
@@ -288,25 +288,25 @@
               <div>
                 <div class="flex justify-between text-sm mb-1">
                   <span class="text-gray-600">Risk Score</span>
-                  <span class="font-mono text-gray-900">0.583</span>
+                  <span class="font-mono text-gray-900" id="risk-score-val">--</span>
                 </div>
                 <div class="progress-bar">
-                  <div class="progress-fill bg-amber-400" style="width: 58%"></div>
+                  <div class="progress-fill bg-amber-400" style="width: 50%" id="risk-score-bar"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between text-sm mb-1">
                   <span class="text-gray-600">Vol Percentile</span>
-                  <span class="font-mono text-gray-900">0.336</span>
+                  <span class="font-mono text-gray-900" id="vol-pct-val">--</span>
                 </div>
                 <div class="progress-bar">
-                  <div class="progress-fill bg-brand-400" style="width: 34%"></div>
+                  <div class="progress-fill bg-brand-400" style="width: 50%" id="vol-pct-bar"></div>
                 </div>
               </div>
             </div>
             
             <div class="mt-6 pt-4 border-t border-gray-100">
-              <p class="text-xs text-gray-400">Next signal: February 2, 2026</p>
+              <p class="text-xs text-gray-400" id="next-signal">Next signal: --</p>
             </div>
           </div>
           
@@ -682,6 +682,19 @@
           Monthly signals
         </span>
       </div>
+      
+      <!-- Live Signal Preview -->
+      <div class="mt-10 p-6 bg-white rounded-2xl border border-gray-200 shadow-lg max-w-md mx-auto">
+        <p class="text-xs text-gray-400 uppercase tracking-wider mb-3">Current Live Signal</p>
+        <div class="flex items-center justify-between">
+          <span class="regime-badge regime-MID" id="cta-regime-badge">
+            <span class="w-2 h-2 rounded-full bg-amber-500" id="cta-regime-dot"></span>
+            <span id="cta-regime-text">LOADING</span>
+          </span>
+          <span class="text-2xl font-bold text-gray-900">→ <span id="cta-equity-pct">--</span>% Equity</span>
+        </div>
+        <p class="text-xs text-gray-400 mt-3" id="cta-signal-date">Loading signal data...</p>
+      </div>
     </div>
   </section>
 
@@ -905,6 +918,126 @@
         }
       }
     });
+    
+    // ===========================================
+    // LIVE SIGNAL FETCH FROM DASHBOARD
+    // ===========================================
+    const DASHBOARD_URL = 'https://bvecchiarelli19-bot.github.io/FRAR_DASHBOARD/outputs';
+    
+    const REGIME_STYLES = {
+      LOW: { badge: 'regime-LOW', dot: 'bg-green-500', color: 'bg-green-400' },
+      MID: { badge: 'regime-MID', dot: 'bg-amber-500', color: 'bg-amber-400' },
+      HIGH: { badge: 'regime-HIGH', dot: 'bg-orange-500', color: 'bg-orange-400' },
+      CRISIS: { badge: 'regime-CRISIS', dot: 'bg-red-500', color: 'bg-red-400' }
+    };
+    
+    const EQUITY_MAP = { LOW: 100, MID: 80, HIGH: 50, CRISIS: 20 };
+    
+    async function fetchLiveSignal() {
+      try {
+        // Fetch quad_signal.json (has most data we need)
+        const quadRes = await fetch(`${DASHBOARD_URL}/quad_signal.json?v=${Date.now()}`);
+        const quadData = await quadRes.json();
+        
+        // Fetch metrics.json for performance stats
+        const metricsRes = await fetch(`${DASHBOARD_URL}/metrics.json?v=${Date.now()}`);
+        const metricsData = await metricsRes.json();
+        
+        // Extract data
+        const regime = quadData.frar?.regime || 'MID';
+        const quadRegime = quadData.quad?.regime || 1;
+        const riskScore = quadData.frar?.risk_score || 0.5;
+        const volPct = quadData.frar?.vol_percentile || 0.5;
+        const equityAlloc = quadData.frar?.equity_allocation || 0.8;
+        const signalDate = quadData.date || 'Unknown';
+        
+        // Get performance metrics
+        const frarNet = metricsData.strategies?.FRAR_Quad_Net || {};
+        const sharpe = frarNet.sharpe || 0.84;
+        const cagr = frarNet.cagr || 0.1128;
+        
+        // Update DOM
+        updateSignalDisplay({
+          regime,
+          quadRegime,
+          riskScore,
+          volPct,
+          equityAlloc,
+          signalDate,
+          sharpe,
+          cagr
+        });
+        
+      } catch (err) {
+        console.log('Could not fetch live signal, using defaults:', err);
+        // Fallback to reasonable defaults - already shown
+      }
+    }
+    
+    function updateSignalDisplay(data) {
+      const style = REGIME_STYLES[data.regime] || REGIME_STYLES.MID;
+      
+      // Format date nicely
+      const dateObj = new Date(data.signalDate + 'T00:00:00');
+      const formattedDate = dateObj.toLocaleDateString('en-US', { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+      
+      // Calculate next signal date (2nd of next month)
+      const nextMonth = new Date(dateObj);
+      nextMonth.setMonth(nextMonth.getMonth() + 1);
+      nextMonth.setDate(2);
+      const nextSignalDate = nextMonth.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      
+      // Update signal date
+      document.getElementById('signal-date').textContent = formattedDate;
+      
+      // Update regime badge
+      const regimeBadge = document.getElementById('regime-badge');
+      regimeBadge.className = `regime-badge ${style.badge}`;
+      document.getElementById('regime-dot').className = `w-2 h-2 rounded-full ${style.dot}`;
+      document.getElementById('regime-text').textContent = `${data.regime} RISK`;
+      
+      // Update stats
+      const equityPct = Math.round(data.equityAlloc * 100);
+      document.getElementById('equity-pct').textContent = `${equityPct}%`;
+      document.getElementById('sharpe-val').textContent = data.sharpe.toFixed(2);
+      document.getElementById('cagr-val').textContent = `${(data.cagr * 100).toFixed(1)}%`;
+      document.getElementById('quad-val').textContent = `Q${data.quadRegime}`;
+      
+      // Update risk score
+      document.getElementById('risk-score-val').textContent = data.riskScore.toFixed(3);
+      document.getElementById('risk-score-bar').style.width = `${data.riskScore * 100}%`;
+      document.getElementById('risk-score-bar').className = `progress-fill ${style.color}`;
+      
+      // Update vol percentile
+      document.getElementById('vol-pct-val').textContent = data.volPct.toFixed(3);
+      document.getElementById('vol-pct-bar').style.width = `${data.volPct * 100}%`;
+      
+      // Update next signal
+      document.getElementById('next-signal').textContent = `Next signal: ${nextSignalDate}`;
+      
+      // Update CTA section signal display
+      const ctaRegimeBadge = document.getElementById('cta-regime-badge');
+      ctaRegimeBadge.className = `regime-badge ${style.badge}`;
+      document.getElementById('cta-regime-dot').className = `w-2 h-2 rounded-full ${style.dot}`;
+      document.getElementById('cta-regime-text').textContent = `${data.regime} RISK`;
+      document.getElementById('cta-equity-pct').textContent = equityPct;
+      document.getElementById('cta-signal-date').textContent = `Signal as of ${formattedDate}`;
+    }
+    
+    // Fetch on page load
+    fetchLiveSignal();
+    
+    // ===========================================
+    // END LIVE SIGNAL
+    // ===========================================
     
     // Form handling
     function handleSubscribe(e) {
