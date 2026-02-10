@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FRAR - Systematic Risk Management for Smarter Investing</title>
-  <meta name="description" content="FRAR detects market regime changes using fractal analysis. Know when to deploy capital and when to protect it.">
+  <title>SteadyGuard — Protect Your Portfolio Before the Next Downturn</title>
+  <meta name="description" content="SteadyGuard tells you when to pull back from the market — before the crash hits. 18 years of backtested data. 27% less drawdown than the S&P 500.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
@@ -15,25 +15,36 @@
       theme: {
         extend: {
           fontFamily: {
-            serif: ['Instrument Serif', 'Georgia', 'serif'],
-            sans: ['Inter', 'sans-serif'],
+            serif: ['DM Serif Display', 'Georgia', 'serif'],
+            sans: ['DM Sans', 'sans-serif'],
           },
           colors: {
-            brand: {
-              50: '#f0f9ff',
-              100: '#e0f2fe',
-              200: '#bae6fd',
-              300: '#7dd3fc',
-              400: '#38bdf8',
-              500: '#0ea5e9',
-              600: '#0284c7',
-              700: '#0369a1',
+            navy: {
+              50: '#f0f4f8',
+              100: '#d9e2ec',
+              200: '#bcccdc',
+              300: '#9fb3c8',
+              400: '#829ab1',
+              500: '#627d98',
+              600: '#486581',
+              700: '#334e68',
+              800: '#243b53',
+              900: '#102a43',
+              950: '#0a1929',
             },
-            surface: {
-              50: '#fafbfc',
-              100: '#f4f6f8',
-              200: '#e9ecef',
-              300: '#dee2e6',
+            accent: {
+              400: '#4fd1c5',
+              500: '#38b2ac',
+              600: '#2c9f94',
+            },
+            gold: {
+              400: '#f6c547',
+              500: '#eab308',
+            },
+            danger: {
+              400: '#fc8181',
+              500: '#f56565',
+              600: '#e53e3e',
             }
           }
         }
@@ -41,687 +52,719 @@
     }
   </script>
   <style>
-    * { font-family: 'Inter', sans-serif; }
-    .font-serif { font-family: 'Instrument Serif', Georgia, serif; }
+    * { font-family: 'DM Sans', sans-serif; }
+    .font-serif { font-family: 'DM Serif Display', Georgia, serif; }
     
     body { 
-      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f0f9ff 100%);
-      color: #1e293b;
+      background: #102a43;
+      color: #d9e2ec;
     }
-    
-    .accent-underline {
-      text-decoration: underline;
-      text-decoration-color: #0ea5e9;
-      text-decoration-thickness: 2px;
-      text-underline-offset: 4px;
+
+    /* Subtle grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
     }
-    
-    .accent-underline-thick {
-      text-decoration: underline;
-      text-decoration-color: #0ea5e9;
-      text-decoration-thickness: 3px;
-      text-underline-offset: 6px;
+
+    body > * { position: relative; z-index: 1; }
+
+    ::selection {
+      background: rgba(79, 209, 197, 0.3);
     }
-    
-    .card-shadow {
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #4fd1c5;
     }
-    
+
+    .card {
+      background: rgba(36, 59, 83, 0.5);
+      border: 1px solid rgba(159, 179, 200, 0.12);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .card-glow {
+      box-shadow: 0 0 60px -20px rgba(79, 209, 197, 0.15);
+    }
+
     .card-hover {
-      transition: all 0.3s ease;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .card-hover:hover {
       transform: translateY(-4px);
-      box-shadow: 0 20px 40px -15px rgba(14, 165, 233, 0.2);
+      border-color: rgba(79, 209, 197, 0.3);
+      box-shadow: 0 20px 60px -20px rgba(79, 209, 197, 0.15);
     }
-    
-    .preview-card {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+
+    .stat-big {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
     }
-    
+
     .cta-primary {
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #4fd1c5 0%, #38b2ac 100%);
+      color: #102a43;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .cta-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 40px rgba(30, 41, 59, 0.3);
+      box-shadow: 0 10px 40px rgba(79, 209, 197, 0.35);
     }
-    
+
     .cta-secondary {
-      transition: all 0.2s ease;
+      border: 1px solid rgba(159, 179, 200, 0.25);
+      color: #d9e2ec;
+      transition: all 0.25s ease;
     }
     .cta-secondary:hover {
-      color: #0ea5e9;
+      border-color: #4fd1c5;
+      color: #4fd1c5;
     }
-    
-    .feature-item {
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border-left: 2px solid transparent;
-      padding-left: 16px;
-      margin-left: -16px;
+
+    .nav-link {
+      color: #829ab1;
+      transition: color 0.2s;
+      font-size: 14px;
     }
-    .feature-item:hover, .feature-item.active {
-      border-left-color: #0ea5e9;
-    }
-    .feature-item.active .feature-label {
-      color: #0ea5e9;
-    }
-    .feature-item.active .feature-title {
-      color: #1e293b;
-    }
-    
+    .nav-link:hover { color: #d9e2ec; }
+
     .regime-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
     }
-    .regime-LOW { background: #dcfce7; color: #166534; }
-    .regime-MID { background: #fef3c7; color: #92400e; }
-    .regime-HIGH { background: #fed7aa; color: #c2410c; }
-    .regime-CRISIS { background: #fecaca; color: #dc2626; }
-    
-    .stat-value {
-      font-size: 2.5rem;
-      font-weight: 700;
-      line-height: 1;
-    }
-    
+    .regime-LOW { background: rgba(72, 187, 120, 0.15); color: #68d391; border: 1px solid rgba(72, 187, 120, 0.25); }
+    .regime-MID { background: rgba(246, 197, 71, 0.15); color: #f6c547; border: 1px solid rgba(246, 197, 71, 0.25); }
+    .regime-HIGH { background: rgba(237, 137, 54, 0.15); color: #ed8936; border: 1px solid rgba(237, 137, 54, 0.25); }
+    .regime-CRISIS { background: rgba(245, 101, 101, 0.15); color: #fc8181; border: 1px solid rgba(245, 101, 101, 0.25); }
+
     .progress-bar {
-      height: 8px;
-      border-radius: 4px;
-      background: #e2e8f0;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(159, 179, 200, 0.15);
       overflow: hidden;
     }
     .progress-fill {
       height: 100%;
-      border-radius: 4px;
-      transition: width 0.5s ease;
+      border-radius: 3px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    
-    .nav-link {
-      color: #64748b;
-      transition: color 0.2s;
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(159, 179, 200, 0.15), transparent);
     }
-    .nav-link:hover {
-      color: #1e293b;
+
+    .glow-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(79, 209, 197, 0.4), transparent);
     }
-    
-    .section-label {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #64748b;
-    }
-    
-    .floating-badge {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 100px;
-      padding: 8px 16px;
-      font-size: 14px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    
+
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
     }
-    .float {
-      animation: float 6s ease-in-out infinite;
+    .float { animation: float 6s ease-in-out infinite; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #64748b;
-      font-size: 14px;
+    .fade-up {
+      animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      opacity: 0;
     }
-    .trust-item svg {
+    .fade-up-d1 { animation-delay: 0.1s; }
+    .fade-up-d2 { animation-delay: 0.2s; }
+    .fade-up-d3 { animation-delay: 0.3s; }
+    .fade-up-d4 { animation-delay: 0.4s; }
+
+    .trust-icon {
       width: 18px;
       height: 18px;
-      color: #94a3b8;
+      color: #4fd1c5;
+    }
+
+    /* Crisis cards red gradient accent */
+    .crisis-accent {
+      background: linear-gradient(135deg, rgba(245, 101, 101, 0.08) 0%, rgba(36, 59, 83, 0.5) 100%);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0a1929; }
+    ::-webkit-scrollbar-thumb { background: #334e68; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #486581; }
+
+    .shield-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #4fd1c5, #38b2ac);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   </style>
 </head>
 <body class="min-h-screen">
   
-  <!-- Navigation -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+  <!-- ============================================ -->
+  <!-- NAVIGATION                                   -->
+  <!-- ============================================ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-navy-950/80 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-6xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center">
-            <span class="text-white font-bold text-lg">F</span>
+          <div class="shield-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#102a43" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
           </div>
-          <span class="text-xl font-semibold text-gray-900">FRAR</span>
+          <span class="text-lg font-semibold text-white tracking-tight">SteadyGuard</span>
         </div>
         <div class="hidden md:flex items-center gap-8">
-          <a href="#platform" class="nav-link">Platform</a>
-          <a href="#performance" class="nav-link">Performance</a>
+          <a href="#proof" class="nav-link">Results</a>
+          <a href="#how-it-works" class="nav-link">How It Works</a>
           <a href="#methodology" class="nav-link">Methodology</a>
           <a href="#faq" class="nav-link">FAQ</a>
         </div>
-        <a href="#subscribe" class="cta-primary px-5 py-2.5 rounded-full text-white text-sm font-medium">
+        <a href="#subscribe" class="cta-primary px-5 py-2.5 rounded-full text-sm">
           Get Started
         </a>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="pt-32 pb-24 px-6">
+  <!-- ============================================ -->
+  <!-- HERO — Lead with value, not methodology      -->
+  <!-- ============================================ -->
+  <section class="pt-36 pb-28 px-6">
     <div class="max-w-6xl mx-auto">
       <div class="grid lg:grid-cols-2 gap-16 items-center">
         <div>
-          <p class="section-label mb-4">RISK MANAGEMENT FOR SERIOUS PORTFOLIOS</p>
-          <h1 class="text-5xl lg:text-6xl font-serif text-gray-900 leading-tight mb-6">
-            For Capital You<br>
-            <span class="italic accent-underline-thick">Can't Afford to Lose.</span>
+          <p class="section-label mb-5 fade-up">PORTFOLIO PROTECTION FOR PRE-RETIREES</p>
+          <h1 class="text-5xl lg:text-[3.5rem] font-serif text-white leading-[1.15] mb-6 fade-up fade-up-d1">
+            You're 10 years from retirement.<br>
+            <span class="italic text-accent-400">You can't afford a 40% loss.</span>
           </h1>
-          <p class="text-xl text-gray-600 leading-relaxed mb-8">
-            Systematic risk detection for investors who need to protect what they've built. Know when markets are fragile before the drawdown hits.
+          <p class="text-xl text-navy-200 leading-relaxed mb-8 fade-up fade-up-d2">
+            SteadyGuard monitors the market and tells you when to pull back — before the drawdown hits. No predictions, no guesswork. Just a clear, monthly signal.
           </p>
           
-          <div class="flex flex-wrap gap-3 mb-8">
-            <span class="floating-badge">📊 Fractal Analysis</span>
-            <span class="floating-badge">🎯 Rules-Based Signals</span>
-            <span class="floating-badge">⚡ Monthly Updates</span>
-          </div>
-          
-          <div class="flex items-center gap-4 mb-8">
-            <a href="#subscribe" class="cta-primary px-8 py-4 rounded-full text-white font-medium text-lg">
-              Request Access
+          <div class="flex items-center gap-4 mb-10 fade-up fade-up-d3">
+            <a href="#subscribe" class="cta-primary px-8 py-4 rounded-full text-base">
+              See the Proof ↓
             </a>
-            <a href="#platform" class="cta-secondary flex items-center gap-2 text-gray-600 font-medium">
-              Learn more <span>→</span>
+            <a href="#how-it-works" class="cta-secondary px-6 py-4 rounded-full text-sm">
+              How It Works
             </a>
           </div>
           
-          <p class="text-sm text-gray-400 uppercase tracking-wider">Scroll to explore</p>
+          <div class="flex items-center gap-6 text-sm text-navy-300 fade-up fade-up-d4">
+            <span class="flex items-center gap-2">
+              <svg class="trust-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              18-year backtest
+            </span>
+            <span class="flex items-center gap-2">
+              <svg class="trust-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+              Live since 2024
+            </span>
+            <span class="flex items-center gap-2">
+              <svg class="trust-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Updates monthly
+            </span>
+          </div>
         </div>
         
+        <!-- Live Signal Card -->
         <div class="relative">
-          <!-- Floating Dashboard Preview -->
-          <div class="preview-card p-6 float" id="live-signal-card">
+          <div class="card card-glow p-6 float" id="live-signal-card">
             <div class="flex items-center justify-between mb-6">
               <div>
-                <p class="text-xs text-gray-400 uppercase tracking-wider">Current Signal</p>
-                <p class="text-sm text-gray-500" id="signal-date">Loading...</p>
+                <p class="text-[11px] text-navy-400 uppercase tracking-widest font-semibold">Current Signal</p>
+                <p class="text-sm text-navy-300 mt-1" id="signal-date">Loading...</p>
               </div>
               <span class="regime-badge regime-MID" id="regime-badge">
-                <span class="w-2 h-2 rounded-full bg-amber-500" id="regime-dot"></span>
+                <span class="w-2 h-2 rounded-full bg-yellow-400" id="regime-dot"></span>
                 <span id="regime-text">LOADING</span>
               </span>
             </div>
             
-            <div class="grid grid-cols-4 gap-4 mb-6">
-              <div class="text-center p-3 bg-surface-50 rounded-xl">
-                <p class="stat-value text-gray-900" id="equity-pct">--%</p>
-                <p class="text-xs text-gray-500 mt-1">Equity</p>
+            <div class="grid grid-cols-3 gap-3 mb-6">
+              <div class="text-center p-4 bg-navy-900/50 rounded-xl">
+                <p class="text-3xl font-bold text-white" id="equity-pct">--%</p>
+                <p class="text-[11px] text-navy-400 mt-1 uppercase tracking-wider">Equity</p>
               </div>
-              <div class="text-center p-3 bg-surface-50 rounded-xl">
-                <p class="stat-value text-brand-600" id="sharpe-val">--</p>
-                <p class="text-xs text-gray-500 mt-1">Sharpe</p>
+              <div class="text-center p-4 bg-navy-900/50 rounded-xl">
+                <p class="text-3xl font-bold text-accent-400" id="sharpe-val">--</p>
+                <p class="text-[11px] text-navy-400 mt-1 uppercase tracking-wider">Sharpe</p>
               </div>
-              <div class="text-center p-3 bg-surface-50 rounded-xl">
-                <p class="stat-value text-green-600" id="cagr-val">--%</p>
-                <p class="text-xs text-gray-500 mt-1">CAGR</p>
-              </div>
-              <div class="text-center p-3 bg-surface-50 rounded-xl">
-                <p class="stat-value text-blue-600 text-lg" id="quad-val" style="font-size: 1.1rem;">--</p>
-                <p class="text-xs text-gray-500 mt-1">Macro Phase</p>
+              <div class="text-center p-4 bg-navy-900/50 rounded-xl">
+                <p class="text-3xl font-bold text-green-400" id="cagr-val">--%</p>
+                <p class="text-[11px] text-navy-400 mt-1 uppercase tracking-wider">CAGR</p>
               </div>
             </div>
             
             <div class="space-y-3">
               <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-gray-600">Risk Score</span>
-                  <span class="font-mono text-gray-900" id="risk-score-val">--</span>
+                <div class="flex justify-between text-sm mb-1.5">
+                  <span class="text-navy-300">Risk Level</span>
+                  <span class="font-mono text-white text-sm" id="risk-score-val">--</span>
                 </div>
                 <div class="progress-bar">
-                  <div class="progress-fill bg-amber-400" style="width: 50%" id="risk-score-bar"></div>
+                  <div class="progress-fill bg-yellow-400" style="width: 50%" id="risk-score-bar"></div>
                 </div>
               </div>
               <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-gray-600">Vol Percentile</span>
-                  <span class="font-mono text-gray-900" id="vol-pct-val">--</span>
+                <div class="flex justify-between text-sm mb-1.5">
+                  <span class="text-navy-300">Volatility</span>
+                  <span class="font-mono text-white text-sm" id="vol-pct-val">--</span>
                 </div>
                 <div class="progress-bar">
-                  <div class="progress-fill bg-brand-400" style="width: 50%" id="vol-pct-bar"></div>
+                  <div class="progress-fill bg-accent-400" style="width: 50%" id="vol-pct-bar"></div>
                 </div>
               </div>
             </div>
             
-            <div class="mt-6 pt-4 border-t border-gray-100">
-              <p class="text-xs text-gray-400" id="next-signal">Next signal: --</p>
+            <div class="mt-5 pt-4 border-t border-white/5">
+              <p class="text-xs text-navy-400" id="next-signal">Next signal: --</p>
             </div>
           </div>
           
-          <!-- Background decoration -->
-          <div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-100 rounded-full blur-3xl opacity-50"></div>
+          <div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-accent-500/10 rounded-full blur-3xl"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Platform Section -->
-  <section id="platform" class="py-24 px-6 bg-white">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-16 items-start">
-        <div>
-          <p class="section-label mb-4">PLATFORM</p>
-          <h2 class="text-4xl lg:text-5xl font-serif text-gray-900 leading-tight mb-6">
-            THE RISK<br>INTELLIGENCE LAYER
-          </h2>
-          <p class="text-lg text-gray-600 mb-12">
-            FRAR adapts to market conditions, not the other way around. Every signal is designed for real investment workflows.
-          </p>
-          
-          <div class="space-y-6">
-            <div class="feature-item active" onclick="setActiveFeature(0)">
-              <p class="feature-label section-label mb-1">REGIME DETECTION</p>
-              <p class="feature-title text-lg font-medium text-gray-900">Know When Markets Are Fragile</p>
-            </div>
-            <div class="feature-item" onclick="setActiveFeature(1)">
-              <p class="feature-label section-label mb-1">ALLOCATION SIGNALS</p>
-              <p class="feature-title text-lg font-medium text-gray-500">Clear Equity Targets Monthly</p>
-            </div>
-            <div class="feature-item" onclick="setActiveFeature(2)">
-              <p class="feature-label section-label mb-1">MACRO OVERLAY</p>
-              <p class="feature-title text-lg font-medium text-gray-500">Growth & Inflation Context</p>
-            </div>
-            <div class="feature-item" onclick="setActiveFeature(3)">
-              <p class="feature-label section-label mb-1">FULL TRANSPARENCY</p>
-              <p class="feature-title text-lg font-medium text-gray-500">Every Signal Explained</p>
-            </div>
-          </div>
-        </div>
-        
-        <div>
-          <!-- Feature Preview Card -->
-          <div class="preview-card p-8" id="feature-preview">
-            <div id="preview-0">
-              <h3 class="text-xl font-semibold text-gray-900 mb-4">Regime Detection</h3>
-              <p class="text-gray-600 mb-6">Three fractal metrics combine into a unified risk score that detects market regime changes:</p>
-              
-              <div class="space-y-4">
-                <div class="flex items-center justify-between p-4 bg-surface-50 rounded-xl">
-                  <div>
-                    <p class="font-medium text-gray-900">Volatility Percentile</p>
-                    <p class="text-sm text-gray-500">Where is vol vs history?</p>
-                  </div>
-                  <span class="font-mono text-lg text-brand-600">0.336</span>
-                </div>
-                <div class="flex items-center justify-between p-4 bg-surface-50 rounded-xl">
-                  <div>
-                    <p class="font-medium text-gray-900">Hill Alpha (Tail Risk)</p>
-                    <p class="text-sm text-gray-500">How fat are the tails?</p>
-                  </div>
-                  <span class="font-mono text-lg text-brand-600">2.83</span>
-                </div>
-                <div class="flex items-center justify-between p-4 bg-surface-50 rounded-xl">
-                  <div>
-                    <p class="font-medium text-gray-900">Hurst Exponent</p>
-                    <p class="text-sm text-gray-500">Trending or mean-reverting?</p>
-                  </div>
-                  <span class="font-mono text-lg text-brand-600">0.485</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="divider"></div>
 
-  <!-- Performance Section -->
-  <section id="performance" class="py-24 px-6 bg-gradient-to-b from-surface-50 to-white">
+  <!-- ============================================ -->
+  <!-- PROOF SECTION — Lead with results            -->
+  <!-- ============================================ -->
+  <section id="proof" class="py-28 px-6">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-16">
-        <p class="section-label mb-4">PERFORMANCE</p>
-        <h2 class="text-4xl lg:text-5xl font-serif text-gray-900 mb-6">
-          Market returns with <span class="italic accent-underline">half the pain.</span>
+        <p class="section-label mb-4">THE PROOF</p>
+        <h2 class="text-4xl lg:text-5xl font-serif text-white mb-6">
+          Same returns. <span class="italic text-accent-400">Half the pain.</span>
         </h2>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-          19 years of backtested data. Transparent methodology. Verifiable results.
+        <p class="text-xl text-navy-200 max-w-2xl mx-auto">
+          19 years of data. Every crash included. Here's what happened.
         </p>
       </div>
       
-      <!-- Stats Grid - Lead with Sharpe and Drawdown -->
+      <!-- Big Stats -->
       <div class="grid md:grid-cols-3 gap-6 mb-16">
-        <div class="preview-card p-8 text-center card-hover border-2 border-brand-200">
-          <p class="stat-value text-brand-600" style="font-size: 3.5rem;">0.84</p>
-          <p class="text-lg font-medium text-gray-700 mt-2">Sharpe Ratio</p>
-          <p class="text-sm text-green-600 mt-2 font-semibold">+50% better than SPY (0.56)</p>
+        <div class="card card-hover p-8 text-center border-accent-500/20">
+          <p class="stat-big text-accent-400">0.84</p>
+          <p class="text-lg font-medium text-white mt-3">Sharpe Ratio</p>
+          <p class="text-sm text-accent-400/80 mt-2 font-semibold">+50% better than S&P 500</p>
         </div>
-        <div class="preview-card p-8 text-center card-hover border-2 border-green-200">
-          <p class="stat-value text-green-600" style="font-size: 3.5rem;">-26%</p>
-          <p class="text-lg font-medium text-gray-700 mt-2">Max Drawdown</p>
-          <p class="text-sm text-green-600 mt-2 font-semibold">vs -55% for SPY</p>
+        <div class="card card-hover p-8 text-center border-green-500/20">
+          <p class="stat-big text-green-400">-26%</p>
+          <p class="text-lg font-medium text-white mt-3">Worst Drawdown</p>
+          <p class="text-sm text-green-400/80 mt-2 font-semibold">vs -55% for S&P 500</p>
         </div>
-        <div class="preview-card p-8 text-center card-hover">
-          <p class="stat-value text-gray-700" style="font-size: 3.5rem;">11.3%</p>
-          <p class="text-lg font-medium text-gray-700 mt-2">CAGR</p>
-          <p class="text-sm text-gray-500 mt-2">Matches SPY (10.9%)</p>
+        <div class="card card-hover p-8 text-center">
+          <p class="stat-big text-white">11.3%</p>
+          <p class="text-lg font-medium text-white mt-3">Annual Return</p>
+          <p class="text-sm text-navy-300 mt-2">Matches the S&P 500</p>
         </div>
       </div>
       
-      <!-- The Point -->
-      <div class="text-center mb-16 max-w-2xl mx-auto">
-        <p class="text-xl text-gray-700 leading-relaxed">
-          <strong>The point:</strong> You get market-like returns with half the drawdowns. A -55% loss requires a 110% gain to recover. A -26% loss only needs 35%. For portfolios funding retirements, endowments, or obligations, that difference is everything.
+      <!-- The Key Insight -->
+      <div class="card p-8 mb-16 max-w-3xl mx-auto text-center">
+        <p class="text-xl text-navy-100 leading-relaxed">
+          <strong class="text-white">Why this matters:</strong> A 55% loss requires a 110% gain just to get back to even. A 26% loss only needs 35%. If you're drawing income from your portfolio, that difference is the difference between retiring on time and working five more years.
         </p>
       </div>
       
-      <!-- Equity Chart - Bigger and Clearer -->
-      <div class="preview-card p-8">
-        <div class="flex items-center justify-between mb-8">
+      <!-- Equity Chart -->
+      <div class="card p-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div>
-            <h3 class="text-2xl font-semibold text-gray-900">Growth of $10,000</h3>
-            <p class="text-base text-gray-500 mt-1">January 2007 – January 2026 (19 years)</p>
+            <h3 class="text-2xl font-semibold text-white">Growth of $10,000</h3>
+            <p class="text-sm text-navy-300 mt-1">January 2007 – January 2026</p>
           </div>
-          <div class="flex items-center gap-8 text-base">
+          <div class="flex items-center gap-6 text-sm">
             <span class="flex items-center gap-2">
-              <span class="w-4 h-4 rounded-full bg-brand-500"></span>
-              <span class="font-medium">FRAR Strategy</span>
+              <span class="w-3 h-3 rounded-full bg-accent-400"></span>
+              <span class="text-navy-200">SteadyGuard</span>
             </span>
             <span class="flex items-center gap-2">
-              <span class="w-4 h-4 rounded-full bg-gray-400"></span>
-              <span class="font-medium">S&P 500 (SPY)</span>
+              <span class="w-3 h-3 rounded-full bg-navy-400"></span>
+              <span class="text-navy-200">S&P 500</span>
             </span>
           </div>
         </div>
         <div class="h-96">
           <canvas id="equityChart"></canvas>
         </div>
-        <div class="mt-6 pt-6 border-t border-gray-100 flex justify-between items-center">
-          <p class="text-sm text-gray-400">Past performance does not guarantee future results. Backtest includes 10bps transaction costs.</p>
-          <div class="text-right">
-            <p class="text-sm text-gray-600"><strong>FRAR Final:</strong> ~$78,000</p>
-            <p class="text-sm text-gray-600"><strong>SPY Final:</strong> ~$72,000</p>
+        <div class="mt-6 pt-5 border-t border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <p class="text-xs text-navy-400">Past performance does not guarantee future results. Backtest includes transaction costs.</p>
+          <div class="text-right text-sm">
+            <span class="text-accent-400 font-semibold">SteadyGuard: ~$78,000</span>
+            <span class="text-navy-400 mx-2">•</span>
+            <span class="text-navy-300">S&P 500: ~$72,000</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- How It Works -->
-  <section id="methodology" class="py-24 px-6 bg-white">
+  <div class="glow-line"></div>
+
+  <!-- ============================================ -->
+  <!-- CRISIS PERFORMANCE — When it matters most    -->
+  <!-- ============================================ -->
+  <section class="py-28 px-6">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-16">
-        <p class="section-label mb-4">METHODOLOGY</p>
-        <h2 class="text-4xl lg:text-5xl font-serif text-gray-900 mb-6">
-          Three inputs. Four regimes.<br><span class="italic">One clear signal.</span>
+        <p class="section-label mb-4">WHEN IT MATTERS MOST</p>
+        <h2 class="text-4xl lg:text-5xl font-serif text-white mb-6">
+          Built for the <span class="italic text-danger-400">worst days.</span>
         </h2>
-      </div>
-      
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center">
-          <div class="w-16 h-16 rounded-2xl bg-brand-50 flex items-center justify-center mx-auto mb-6">
-            <span class="text-3xl">📊</span>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">1. Measure</h3>
-          <p class="text-gray-600">Three fractal metrics capture market structure: volatility clustering, tail thickness, and mean-reversion strength.</p>
-        </div>
-        
-        <div class="text-center">
-          <div class="w-16 h-16 rounded-2xl bg-brand-50 flex items-center justify-center mx-auto mb-6">
-            <span class="text-3xl">🎯</span>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">2. Classify</h3>
-          <p class="text-gray-600">Metrics combine into a risk score mapped to four regimes: LOW, MID, HIGH, or CRISIS. No discretion.</p>
-        </div>
-        
-        <div class="text-center">
-          <div class="w-16 h-16 rounded-2xl bg-brand-50 flex items-center justify-center mx-auto mb-6">
-            <span class="text-3xl">✅</span>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">3. Allocate</h3>
-          <p class="text-gray-600">Each regime maps to a clear equity allocation: 100%, 80%, 50%, or 20%. Simple rules, executed monthly.</p>
-        </div>
-      </div>
-      
-      <!-- Regime Scale -->
-      <div class="mt-16 preview-card p-8">
-        <h4 class="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider mb-8">Regime → Allocation Mapping</h4>
-        <div class="grid grid-cols-4 gap-4">
-          <div class="text-center">
-            <span class="regime-badge regime-LOW mb-3">
-              <span class="w-2 h-2 rounded-full bg-green-500"></span>
-              LOW
-            </span>
-            <div class="mt-4">
-              <div class="h-32 bg-green-100 rounded-xl flex items-end justify-center pb-2">
-                <span class="text-2xl font-bold text-green-700">100%</span>
-              </div>
-              <p class="text-xs text-gray-500 mt-2">Full equity</p>
-            </div>
-          </div>
-          <div class="text-center">
-            <span class="regime-badge regime-MID mb-3">
-              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-              MID
-            </span>
-            <div class="mt-4">
-              <div class="h-32 bg-amber-100 rounded-xl flex items-end justify-center pb-2" style="height: 104px">
-                <span class="text-2xl font-bold text-amber-700">80%</span>
-              </div>
-              <p class="text-xs text-gray-500 mt-2">Reduced</p>
-            </div>
-          </div>
-          <div class="text-center">
-            <span class="regime-badge regime-HIGH mb-3">
-              <span class="w-2 h-2 rounded-full bg-orange-500"></span>
-              HIGH
-            </span>
-            <div class="mt-4">
-              <div class="h-32 bg-orange-100 rounded-xl flex items-end justify-center pb-2" style="height: 64px">
-                <span class="text-2xl font-bold text-orange-700">50%</span>
-              </div>
-              <p class="text-xs text-gray-500 mt-2">Defensive</p>
-            </div>
-          </div>
-          <div class="text-center">
-            <span class="regime-badge regime-CRISIS mb-3">
-              <span class="w-2 h-2 rounded-full bg-red-500"></span>
-              CRISIS
-            </span>
-            <div class="mt-4">
-              <div class="h-32 bg-red-100 rounded-xl flex items-end justify-center pb-2" style="height: 32px">
-                <span class="text-2xl font-bold text-red-700">20%</span>
-              </div>
-              <p class="text-xs text-gray-500 mt-2">Preservation</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Macro Regime Section -->
-  <section class="py-24 px-6 bg-gradient-to-b from-white to-surface-50">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <p class="section-label mb-4">MACRO OVERLAY</p>
-          <h2 class="text-4xl lg:text-5xl font-serif text-gray-900 leading-tight mb-6">
-            Macro Regime:<br><span class="italic">Context for Your Capital</span>
-          </h2>
-          <p class="text-lg text-gray-600 mb-6">
-            FRAR tells you <em>how much</em> risk to take. The Macro Regime tells you <em>where</em> to take it.
-          </p>
-          <p class="text-gray-600 mb-6">
-            We classify the economic environment using the <strong>rate of change</strong> in growth and inflation, not absolute levels. This creates four distinct phases, each favoring different sectors:
-          </p>
-          <ul class="space-y-3 text-gray-600">
-            <li class="flex items-start gap-3">
-              <span class="w-6 h-6 rounded bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm flex-shrink-0">●</span>
-              <span><strong>Goldilocks</strong>: Growth accelerating, inflation falling. Favors tech, growth stocks, long-duration assets.</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="w-6 h-6 rounded bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-sm flex-shrink-0">●</span>
-              <span><strong>Reflation</strong>: Growth accelerating, inflation rising. Favors cyclicals, commodities, financials.</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="w-6 h-6 rounded bg-red-100 flex items-center justify-center text-red-700 font-bold text-sm flex-shrink-0">●</span>
-              <span><strong>Stagflation</strong>: Growth decelerating, inflation rising. Favors energy, defensives, cash. Avoid bonds.</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="w-6 h-6 rounded bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-sm flex-shrink-0">●</span>
-              <span><strong>Deflation</strong>: Growth decelerating, inflation falling. Favors treasuries, utilities, quality.</span>
-            </li>
-          </ul>
-          <p class="text-sm text-gray-500 mt-6">
-            Signals derived from FRED economic data (industrial production, payrolls, retail sales, CPI, PCE).
-          </p>
-        </div>
-        
-        <div>
-          <!-- Macro Regime Visualization -->
-          <div class="preview-card p-8">
-            <h4 class="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider mb-6">Economic Cycle Phases</h4>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="p-6 bg-blue-50 rounded-xl border-2 border-blue-200 text-center">
-                <p class="text-lg font-semibold text-blue-700">Goldilocks</p>
-                <p class="text-sm text-gray-500 mt-2">Growth ↑ Inflation ↓</p>
-                <p class="text-xs text-blue-600 mt-3 font-medium">Tech • Growth • Duration</p>
-              </div>
-              <div class="p-6 bg-amber-50 rounded-xl border-2 border-amber-200 text-center">
-                <p class="text-lg font-semibold text-amber-700">Reflation</p>
-                <p class="text-sm text-gray-500 mt-2">Growth ↑ Inflation ↑</p>
-                <p class="text-xs text-amber-600 mt-3 font-medium">Cyclicals • Commodities • Financials</p>
-              </div>
-              <div class="p-6 bg-purple-50 rounded-xl border-2 border-purple-200 text-center">
-                <p class="text-lg font-semibold text-purple-700">Deflation</p>
-                <p class="text-sm text-gray-500 mt-2">Growth ↓ Inflation ↓</p>
-                <p class="text-xs text-purple-600 mt-3 font-medium">Treasuries • Utilities • Quality</p>
-              </div>
-              <div class="p-6 bg-red-50 rounded-xl border-2 border-red-200 text-center">
-                <p class="text-lg font-semibold text-red-700">Stagflation</p>
-                <p class="text-sm text-gray-500 mt-2">Growth ↓ Inflation ↑</p>
-                <p class="text-xs text-red-600 mt-3 font-medium">Energy • Defensives • Cash</p>
-              </div>
-            </div>
-            <div class="mt-6 pt-6 border-t border-gray-100 text-center">
-              <p class="text-sm text-gray-500">Current Phase: <span class="font-semibold text-blue-600" id="quad-current-display">Goldilocks</span></p>
-              <p class="text-xs text-gray-400 mt-1">Updated monthly with FRED macro data</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Crisis Performance -->
-  <section class="py-24 px-6 bg-gradient-to-b from-surface-50 to-white">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <p class="section-label mb-4">WHEN IT MATTERS</p>
-        <h2 class="text-4xl lg:text-5xl font-serif text-gray-900 mb-6">
-          Built for the <span class="italic accent-underline">worst days.</span>
-        </h2>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-          If you're drawing income from your portfolio, a -50% drawdown isn't a "buying opportunity." It's a crisis. FRAR is designed for investors who can't wait four years to recover.
+        <p class="text-xl text-navy-200 max-w-2xl mx-auto">
+          A 50% drawdown isn't a "buying opportunity" when you're five years from retirement. It's a crisis. SteadyGuard is built to prevent that.
         </p>
       </div>
       
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="preview-card p-8 card-hover">
-          <p class="text-5xl font-serif text-red-500 mb-2">-55%</p>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">2008 Financial Crisis</h3>
-          <p class="text-gray-500 text-sm mb-4">SPY peak-to-trough drawdown. Recovery took 4+ years.</p>
-          <div class="pt-4 border-t border-gray-100">
-            <p class="text-sm text-green-600 font-medium">FRAR: -26% max drawdown</p>
-            <p class="text-xs text-gray-400 mt-1">Signaled HIGH risk before Lehman</p>
+        <div class="card crisis-accent card-hover p-8">
+          <p class="text-5xl font-serif text-danger-400 mb-3">-55%</p>
+          <h3 class="text-xl font-semibold text-white mb-2">2008 Financial Crisis</h3>
+          <p class="text-sm text-navy-300 mb-5">S&P 500 peak-to-trough. Recovery took 4+ years.</p>
+          <div class="pt-4 border-t border-white/5">
+            <p class="text-sm text-green-400 font-semibold">SteadyGuard: -26% max drawdown</p>
+            <p class="text-xs text-navy-400 mt-1">Detected high risk before Lehman</p>
           </div>
         </div>
         
-        <div class="preview-card p-8 card-hover">
-          <p class="text-5xl font-serif text-red-500 mb-2">-34%</p>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">COVID Crash 2020</h3>
-          <p class="text-gray-500 text-sm mb-4">Fastest 30% drop in history. 33 days to bottom.</p>
-          <div class="pt-4 border-t border-gray-100">
-            <p class="text-sm text-green-600 font-medium">FRAR: Reduced exposure in Feb</p>
-            <p class="text-xs text-gray-400 mt-1">MID regime before collapse</p>
+        <div class="card crisis-accent card-hover p-8">
+          <p class="text-5xl font-serif text-danger-400 mb-3">-34%</p>
+          <h3 class="text-xl font-semibold text-white mb-2">COVID Crash 2020</h3>
+          <p class="text-sm text-navy-300 mb-5">Fastest 30% drop in history. 33 days to the bottom.</p>
+          <div class="pt-4 border-t border-white/5">
+            <p class="text-sm text-green-400 font-semibold">SteadyGuard: Reduced exposure in Feb</p>
+            <p class="text-xs text-navy-400 mt-1">Flagged elevated risk before the collapse</p>
           </div>
         </div>
         
-        <div class="preview-card p-8 card-hover">
-          <p class="text-5xl font-serif text-red-500 mb-2">-25%</p>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">2022 Bear Market</h3>
-          <p class="text-gray-500 text-sm mb-4">Stocks AND bonds fell together. Nowhere to hide.</p>
-          <div class="pt-4 border-t border-gray-100">
-            <p class="text-sm text-green-600 font-medium">FRAR: Defensive throughout</p>
-            <p class="text-xs text-gray-400 mt-1">Reduced exposure all year</p>
+        <div class="card crisis-accent card-hover p-8">
+          <p class="text-5xl font-serif text-danger-400 mb-3">-25%</p>
+          <h3 class="text-xl font-semibold text-white mb-2">2022 Bear Market</h3>
+          <p class="text-sm text-navy-300 mb-5">Stocks AND bonds fell together. Diversification failed.</p>
+          <div class="pt-4 border-t border-white/5">
+            <p class="text-sm text-green-400 font-semibold">SteadyGuard: Defensive all year</p>
+            <p class="text-xs text-navy-400 mt-1">Reduced exposure throughout 2022</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ Section -->
-  <section id="faq" class="py-24 px-6 bg-white">
+  <div class="divider"></div>
+
+  <!-- ============================================ -->
+  <!-- WHO THIS IS FOR                              -->
+  <!-- ============================================ -->
+  <section class="py-28 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="section-label mb-4">WHO THIS IS FOR</p>
+          <h2 class="text-4xl lg:text-5xl font-serif text-white leading-tight mb-6">
+            You've spent decades<br>
+            <span class="italic text-accent-400">building this portfolio.</span>
+          </h2>
+          <p class="text-lg text-navy-200 leading-relaxed mb-8">
+            SteadyGuard is for investors who are approaching retirement — or already in it — and can't afford to ride out a major crash. If a 40% drawdown would change your retirement plans, this is built for you.
+          </p>
+        </div>
+        
+        <div class="space-y-4">
+          <div class="card card-hover p-6">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-accent-500/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="text-xl">🎯</span>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-white mb-1">5–15 years from retirement</h3>
+                <p class="text-navy-200 text-sm leading-relaxed">You're in the "accumulation-to-preservation" transition. The biggest risk isn't missing gains — it's taking a huge loss right before you need the money.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card card-hover p-6">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-accent-500/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="text-xl">📉</span>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-white mb-1">Drawing income from your portfolio</h3>
+                <p class="text-navy-200 text-sm leading-relaxed">When you're selling to fund expenses, a drawdown compounds. You sell low AND miss the recovery. SteadyGuard helps you avoid that trap.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card card-hover p-6">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-accent-500/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="text-xl">🧠</span>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-white mb-1">Want a system, not opinions</h3>
+                <p class="text-navy-200 text-sm leading-relaxed">No talking heads, no gut feelings. SteadyGuard is rules-based and transparent. You see exactly why every signal was triggered.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="glow-line"></div>
+
+  <!-- ============================================ -->
+  <!-- HOW IT WORKS — Plain english                 -->
+  <!-- ============================================ -->
+  <section id="how-it-works" class="py-28 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="section-label mb-4">HOW IT WORKS</p>
+        <h2 class="text-4xl lg:text-5xl font-serif text-white mb-6">
+          One signal. <span class="italic text-accent-400">Once a month.</span>
+        </h2>
+        <p class="text-xl text-navy-200 max-w-2xl mx-auto">
+          SteadyGuard reads the market's vital signs and tells you how much of your money should be in stocks. That's it.
+        </p>
+      </div>
+      
+      <!-- Steps -->
+      <div class="grid md:grid-cols-3 gap-8 mb-20">
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-2xl bg-navy-800 border border-white/10 flex items-center justify-center mx-auto mb-5">
+            <span class="text-accent-400 font-bold text-xl">1</span>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">We read the market</h3>
+          <p class="text-navy-200 text-sm leading-relaxed">SteadyGuard measures three things: how volatile the market is, how likely a tail event is, and whether conditions are trending or reverting. Think of it like checking blood pressure, heart rate, and temperature.</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-2xl bg-navy-800 border border-white/10 flex items-center justify-center mx-auto mb-5">
+            <span class="text-accent-400 font-bold text-xl">2</span>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">We classify the environment</h3>
+          <p class="text-navy-200 text-sm leading-relaxed">Those measurements combine into a single risk score, which maps to one of four market conditions: Calm, Cautious, Risky, or Crisis. No discretion, no judgment calls — just math.</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-2xl bg-navy-800 border border-white/10 flex items-center justify-center mx-auto mb-5">
+            <span class="text-accent-400 font-bold text-xl">3</span>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">You get a clear number</h3>
+          <p class="text-navy-200 text-sm leading-relaxed">Each condition tells you exactly how much to have in stocks: 100%, 80%, 50%, or 20%. You adjust once a month. No day trading, no constant monitoring.</p>
+        </div>
+      </div>
+      
+      <!-- Four Regimes — Plain English -->
+      <div class="card p-8">
+        <h4 class="text-center text-[11px] font-bold text-navy-400 uppercase tracking-widest mb-8">Market Condition → Your Allocation</h4>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="text-center p-6 bg-green-500/8 rounded-xl border border-green-500/15">
+            <div class="regime-badge regime-LOW mx-auto mb-4">
+              <span class="w-2 h-2 rounded-full bg-green-400"></span>
+              CALM
+            </div>
+            <p class="text-4xl font-bold text-white mb-1">100%</p>
+            <p class="text-xs text-navy-300">Full speed. Stay invested.</p>
+          </div>
+          <div class="text-center p-6 bg-yellow-500/8 rounded-xl border border-yellow-500/15">
+            <div class="regime-badge regime-MID mx-auto mb-4">
+              <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+              CAUTIOUS
+            </div>
+            <p class="text-4xl font-bold text-white mb-1">80%</p>
+            <p class="text-xs text-navy-300">Ease back slightly.</p>
+          </div>
+          <div class="text-center p-6 bg-orange-500/8 rounded-xl border border-orange-500/15">
+            <div class="regime-badge regime-HIGH mx-auto mb-4">
+              <span class="w-2 h-2 rounded-full bg-orange-400"></span>
+              RISKY
+            </div>
+            <p class="text-4xl font-bold text-white mb-1">50%</p>
+            <p class="text-xs text-navy-300">Move to safety.</p>
+          </div>
+          <div class="text-center p-6 bg-red-500/8 rounded-xl border border-red-500/15">
+            <div class="regime-badge regime-CRISIS mx-auto mb-4">
+              <span class="w-2 h-2 rounded-full bg-red-400"></span>
+              CRISIS
+            </div>
+            <p class="text-4xl font-bold text-white mb-1">20%</p>
+            <p class="text-xs text-navy-300">Protect your capital.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================ -->
+  <!-- BACKTEST TOOL TEASER                         -->
+  <!-- ============================================ -->
+  <section class="py-28 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="section-label mb-4">COMING SOON</p>
+      <h2 class="text-4xl lg:text-5xl font-serif text-white mb-6">
+        Upload your portfolio.<br>
+        <span class="italic text-accent-400">See what would have happened.</span>
+      </h2>
+      <p class="text-xl text-navy-200 mb-10 leading-relaxed">
+        We're building a tool that lets you backtest SteadyGuard against your own holdings. Enter your portfolio, pick a time period, and see exactly how much drawdown protection you would have had.
+      </p>
+      <div class="card p-8 mb-8">
+        <div class="flex items-center justify-center gap-4 text-navy-300">
+          <svg class="w-12 h-12 text-navy-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+          <div class="text-left">
+            <p class="text-white font-semibold text-lg">Portfolio Backtest Tool</p>
+            <p class="text-navy-300 text-sm">Upload your holdings → See SteadyGuard's impact on your specific portfolio</p>
+          </div>
+        </div>
+      </div>
+      <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="handleToolWaitlist(event)">
+        <input 
+          type="email" 
+          id="tool-email"
+          placeholder="Get notified when it launches" 
+          required
+          class="flex-1 px-5 py-3.5 rounded-xl bg-navy-800 border border-white/10 text-white placeholder-navy-400 focus:outline-none focus:border-accent-400/50 focus:ring-2 focus:ring-accent-400/20 transition text-sm"
+        >
+        <button type="submit" class="cta-primary px-6 py-3.5 rounded-xl text-sm whitespace-nowrap">
+          Join Waitlist
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <div class="glow-line"></div>
+
+  <!-- ============================================ -->
+  <!-- METHODOLOGY — For those who want depth       -->
+  <!-- ============================================ -->
+  <section id="methodology" class="py-28 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="section-label mb-4">UNDER THE HOOD</p>
+        <h2 class="text-4xl lg:text-5xl font-serif text-white mb-6">
+          Transparent methodology.<br><span class="italic text-accent-400">No black boxes.</span>
+        </h2>
+        <p class="text-xl text-navy-200 max-w-2xl mx-auto">
+          For investors who want to understand exactly what drives every signal. SteadyGuard is fully transparent — here's how it works at the technical level.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="card p-6 card-hover">
+          <p class="text-accent-400 font-mono text-sm mb-3">Metric 1</p>
+          <h3 class="text-lg font-semibold text-white mb-2">Volatility Percentile</h3>
+          <p class="text-sm text-navy-200 leading-relaxed">Where is current volatility relative to its own history? Higher percentile = more risk. Measures the clustering of large moves.</p>
+        </div>
+        <div class="card p-6 card-hover">
+          <p class="text-accent-400 font-mono text-sm mb-3">Metric 2</p>
+          <h3 class="text-lg font-semibold text-white mb-2">Tail Risk (Hill Estimator)</h3>
+          <p class="text-sm text-navy-200 leading-relaxed">How likely is an extreme move? The Hill estimator measures the "fatness" of distribution tails. Fatter tails = higher crash probability.</p>
+        </div>
+        <div class="card p-6 card-hover">
+          <p class="text-accent-400 font-mono text-sm mb-3">Metric 3</p>
+          <h3 class="text-lg font-semibold text-white mb-2">Trend Strength (Hurst Exponent)</h3>
+          <p class="text-sm text-navy-200 leading-relaxed">Is the market trending or choppy? A Hurst value near 0.5 means random. Below 0.5 means mean-reverting. Above means trending — which can amplify drawdowns.</p>
+        </div>
+      </div>
+      
+      <div class="card p-6 max-w-2xl mx-auto">
+        <p class="text-sm text-navy-200 leading-relaxed text-center">
+          These three metrics are combined into a single composite risk score, ranked against its own history, and mapped to the four allocation levels above. The entire process is rules-based with no human discretion. Full methodology documentation available to subscribers.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================ -->
+  <!-- FAQ — Rewritten for non-quant audience       -->
+  <!-- ============================================ -->
+  <section id="faq" class="py-28 px-6">
     <div class="max-w-3xl mx-auto">
       <div class="text-center mb-16">
         <p class="section-label mb-4">FAQ</p>
-        <h2 class="text-4xl font-serif text-gray-900">Common questions</h2>
+        <h2 class="text-4xl font-serif text-white">Common questions</h2>
       </div>
       
       <div class="space-y-8">
-        <div class="border-b border-gray-100 pb-8">
-          <h3 class="text-lg font-semibold text-gray-900 mb-3">Is this market timing?</h3>
-          <p class="text-gray-600">No. Market timing tries to predict where prices will go. FRAR measures current market structure: how volatile, how fat-tailed, how trendy. It's risk management, not prediction. We're not saying "the market will crash," we're saying "the market is currently fragile."</p>
+        <div class="pb-8 border-b border-white/5">
+          <h3 class="text-lg font-semibold text-white mb-3">Is this market timing?</h3>
+          <p class="text-navy-200 leading-relaxed">No. Market timing tries to predict where prices will go. SteadyGuard measures current market conditions — how volatile things are, how likely a big move is, and whether prices are trending. It's like checking the weather forecast before you leave the house. We're not predicting a storm — we're telling you it's already getting cloudy.</p>
         </div>
         
-        <div class="border-b border-gray-100 pb-8">
-          <h3 class="text-lg font-semibold text-gray-900 mb-3">How is this different from just watching the VIX?</h3>
-          <p class="text-gray-600">VIX is one input. FRAR combines three orthogonal measures: volatility clustering, tail risk (Hill estimator), and market memory (Hurst exponent). The combination catches regime changes that single metrics miss, with fewer false signals.</p>
+        <div class="pb-8 border-b border-white/5">
+          <h3 class="text-lg font-semibold text-white mb-3">What do I actually do with the signal?</h3>
+          <p class="text-navy-200 leading-relaxed">Once a month, you check the signal. If it says 80%, you move 80% of your investment portfolio into stocks (or a stock index fund) and put the rest in bonds or cash. That's it. One adjustment, once a month. Most months, nothing changes.</p>
         </div>
         
-        <div class="border-b border-gray-100 pb-8">
-          <h3 class="text-lg font-semibold text-gray-900 mb-3">What if FRAR is wrong?</h3>
-          <p class="text-gray-600">It will be, sometimes. FRAR underperforms in low-volatility melt-ups and can't react to sudden shocks between monthly signals. It's designed to reduce average drawdowns, not eliminate all losses. We publish known failure modes for full transparency.</p>
+        <div class="pb-8 border-b border-white/5">
+          <h3 class="text-lg font-semibold text-white mb-3">What if SteadyGuard is wrong?</h3>
+          <p class="text-navy-200 leading-relaxed">It will be sometimes. SteadyGuard can underperform during calm markets that keep rising, and it can't react to sudden shocks that happen between monthly signals. It's designed to reduce average drawdowns across full market cycles, not to be perfect every month. We publish all known limitations for full transparency.</p>
         </div>
         
-        <div class="border-b border-gray-100 pb-8">
-          <h3 class="text-lg font-semibold text-gray-900 mb-3">Why is the basic signal free?</h3>
-          <p class="text-gray-600">The monthly regime signal (LOW/MID/HIGH/CRISIS) will always be free. That's the core insight, and we want it accessible to everyone. Premium features like sector-level allocations, the macro regime overlay, weekly signals, email alerts, and API access are where the business model lives. Free users get the "what." Paid users get the "how" and "why."</p>
+        <div class="pb-8 border-b border-white/5">
+          <h3 class="text-lg font-semibold text-white mb-3">How much does it cost?</h3>
+          <p class="text-navy-200 leading-relaxed">The monthly signal (Calm / Cautious / Risky / Crisis) will always be free. That's the core insight. Premium features like detailed analysis, email alerts, the portfolio backtest tool, and historical data access will be available through a subscription. Pricing will be announced when we launch.</p>
         </div>
         
         <div class="pb-8">
-          <h3 class="text-lg font-semibold text-gray-900 mb-3">Can I verify the backtest myself?</h3>
-          <p class="text-gray-600">Yes. The methodology is fully transparent and uses publicly available data (SPY, sector ETFs). Pro subscribers get access to the full research dashboard with complete historical data and code.</p>
+          <h3 class="text-lg font-semibold text-white mb-3">Can I verify the results myself?</h3>
+          <p class="text-navy-200 leading-relaxed">Yes. The methodology is fully transparent and uses publicly available market data. We'll be publishing the complete backtest methodology so anyone can reproduce the results independently.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section id="subscribe" class="py-24 px-6 bg-gradient-to-b from-brand-50 to-white">
+  <div class="glow-line"></div>
+
+  <!-- ============================================ -->
+  <!-- CTA SECTION                                  -->
+  <!-- ============================================ -->
+  <section id="subscribe" class="py-28 px-6">
     <div class="max-w-3xl mx-auto text-center">
-      <div class="floating-badge inline-flex items-center gap-2 mb-6">
-        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-navy-800 border border-white/10 text-sm text-navy-200 mb-8">
+        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
         Now accepting early access
       </div>
       
-      <h2 class="text-4xl lg:text-5xl font-serif text-gray-900 mb-6">
-        Protect what you've <span class="italic accent-underline-thick">already built.</span>
+      <h2 class="text-4xl lg:text-5xl font-serif text-white mb-6">
+        Protect what you've<br><span class="italic text-accent-400">already built.</span>
       </h2>
-      <p class="text-xl text-gray-600 mb-10">
-        For retirees, advisors, and institutions who take capital preservation seriously.
+      <p class="text-xl text-navy-200 mb-10">
+        Get SteadyGuard's monthly signal delivered to your inbox. Free.
       </p>
       
       <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8" onsubmit="handleSubscribe(event)">
@@ -730,171 +773,112 @@
           id="email-input"
           placeholder="Enter your email" 
           required
-          class="flex-1 px-5 py-4 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition"
+          class="flex-1 px-5 py-4 rounded-xl bg-navy-800 border border-white/10 text-white placeholder-navy-400 focus:outline-none focus:border-accent-400/50 focus:ring-2 focus:ring-accent-400/20 transition"
         >
-        <button type="submit" class="cta-primary px-8 py-4 rounded-xl text-white font-medium whitespace-nowrap">
-          Request access →
+        <button type="submit" class="cta-primary px-8 py-4 rounded-xl font-medium whitespace-nowrap">
+          Get Access →
         </button>
       </form>
       
-      <div class="flex items-center justify-center gap-8 text-sm text-gray-500">
-        <span class="trust-item">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-          Transparent methodology
+      <div class="flex items-center justify-center gap-8 text-sm text-navy-300 mb-12">
+        <span class="flex items-center gap-2">
+          <svg class="trust-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          Free monthly signal
         </span>
-        <span class="trust-item">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-          19-year backtest
+        <span class="flex items-center gap-2">
+          <svg class="trust-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+          Transparent results
         </span>
-        <span class="trust-item">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          Monthly signals
+        <span class="flex items-center gap-2">
+          <svg class="trust-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          No spam, ever
         </span>
       </div>
       
-      <!-- Live Signal Preview -->
-      <div class="mt-10 p-6 bg-white rounded-2xl border border-gray-200 shadow-lg max-w-md mx-auto">
-        <p class="text-xs text-gray-400 uppercase tracking-wider mb-3">Current Live Signal</p>
+      <!-- Live Signal in CTA -->
+      <div class="card p-6 max-w-sm mx-auto">
+        <p class="text-[11px] text-navy-400 uppercase tracking-widest mb-3">Current Live Signal</p>
         <div class="flex items-center justify-between">
           <span class="regime-badge regime-MID" id="cta-regime-badge">
-            <span class="w-2 h-2 rounded-full bg-amber-500" id="cta-regime-dot"></span>
+            <span class="w-2 h-2 rounded-full bg-yellow-400" id="cta-regime-dot"></span>
             <span id="cta-regime-text">LOADING</span>
           </span>
-          <span class="text-2xl font-bold text-gray-900">→ <span id="cta-equity-pct">--</span>% Equity</span>
+          <span class="text-2xl font-bold text-white">→ <span id="cta-equity-pct">--</span>% Equity</span>
         </div>
-        <p class="text-xs text-gray-400 mt-3" id="cta-signal-date">Loading signal data...</p>
+        <p class="text-xs text-navy-400 mt-3" id="cta-signal-date">Loading signal data...</p>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="py-16 px-6 bg-white border-t border-gray-100">
+  <!-- ============================================ -->
+  <!-- FOOTER                                       -->
+  <!-- ============================================ -->
+  <footer class="py-16 px-6 border-t border-white/5">
     <div class="max-w-6xl mx-auto">
       <div class="grid md:grid-cols-4 gap-12 mb-12">
         <div>
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center">
-              <span class="text-white font-bold text-lg">F</span>
+            <div class="shield-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#102a43" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
             </div>
-            <span class="text-xl font-semibold text-gray-900">FRAR</span>
+            <span class="text-lg font-semibold text-white">SteadyGuard</span>
           </div>
-          <p class="text-sm text-gray-500">Systematic risk management for portfolios that can't afford large drawdowns.</p>
+          <p class="text-sm text-navy-400">Portfolio protection for investors who can't afford large drawdowns.</p>
         </div>
         
         <div>
-          <h4 class="font-semibold text-gray-900 mb-4 uppercase text-xs tracking-wider">Product</h4>
-          <ul class="space-y-3 text-sm text-gray-500">
-            <li><a href="#platform" class="hover:text-gray-900 transition">Platform</a></li>
-            <li><a href="#performance" class="hover:text-gray-900 transition">Performance</a></li>
-            <li><a href="#methodology" class="hover:text-gray-900 transition">Methodology</a></li>
+          <h4 class="font-semibold text-navy-300 mb-4 uppercase text-[11px] tracking-widest">Product</h4>
+          <ul class="space-y-3 text-sm text-navy-400">
+            <li><a href="#proof" class="hover:text-white transition">Results</a></li>
+            <li><a href="#how-it-works" class="hover:text-white transition">How It Works</a></li>
+            <li><a href="#methodology" class="hover:text-white transition">Methodology</a></li>
+            <li><a href="https://bvecchiarelli19-bot.github.io/FRAR_DASHBOARD/" target="_blank" class="hover:text-white transition">Live Dashboard</a></li>
           </ul>
         </div>
         
         <div>
-          <h4 class="font-semibold text-gray-900 mb-4 uppercase text-xs tracking-wider">Company</h4>
-          <ul class="space-y-3 text-sm text-gray-500">
-            <li><a href="#" class="hover:text-gray-900 transition">About</a></li>
-            <li><a href="#" class="hover:text-gray-900 transition">Contact</a></li>
-            <li><a href="#" class="hover:text-gray-900 transition">Twitter</a></li>
+          <h4 class="font-semibold text-navy-300 mb-4 uppercase text-[11px] tracking-widest">Company</h4>
+          <ul class="space-y-3 text-sm text-navy-400">
+            <li><a href="#" class="hover:text-white transition">About</a></li>
+            <li><a href="#" class="hover:text-white transition">Contact</a></li>
           </ul>
         </div>
         
         <div>
-          <h4 class="font-semibold text-gray-900 mb-4 uppercase text-xs tracking-wider">Legal</h4>
-          <ul class="space-y-3 text-sm text-gray-500">
-            <li><a href="#" class="hover:text-gray-900 transition">Privacy Policy</a></li>
-            <li><a href="#" class="hover:text-gray-900 transition">Terms of Service</a></li>
-            <li><a href="#" class="hover:text-gray-900 transition">Disclaimer</a></li>
+          <h4 class="font-semibold text-navy-300 mb-4 uppercase text-[11px] tracking-widest">Legal</h4>
+          <ul class="space-y-3 text-sm text-navy-400">
+            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-white transition">Disclaimer</a></li>
           </ul>
         </div>
       </div>
       
-      <div class="pt-8 border-t border-gray-100 text-center text-sm text-gray-400">
+      <div class="pt-8 border-t border-white/5 text-center text-sm text-navy-500">
         <p>For research and educational purposes only. Not financial advice. Past performance does not guarantee future results.</p>
-        <p class="mt-2">© 2026 FRAR. All rights reserved.</p>
+        <p class="mt-2">© 2026 SteadyGuard. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
   <!-- Success Modal -->
-  <div id="success-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-    <div class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center shadow-2xl">
-      <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
-        <span class="text-3xl">✓</span>
+  <div id="success-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+    <div class="card p-8 max-w-md mx-4 text-center shadow-2xl border-accent-400/20">
+      <div class="w-16 h-16 rounded-full bg-accent-500/15 flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
       </div>
-      <h3 class="text-2xl font-serif text-gray-900 mb-2">You're on the list!</h3>
-      <p class="text-gray-600 mb-6">We'll send your first signal on the 2nd of next month. Check your email for confirmation.</p>
-      <button onclick="closeModal()" class="cta-primary px-6 py-3 rounded-xl text-white font-medium">Got it</button>
+      <h3 class="text-2xl font-serif text-white mb-2">You're on the list.</h3>
+      <p class="text-navy-200 mb-6">We'll send your first signal on the 2nd of next month.</p>
+      <button onclick="closeModal()" class="cta-primary px-6 py-3 rounded-xl text-sm">Got it</button>
     </div>
   </div>
 
   <script>
-    // Feature preview switching
-    const featureContents = [
-      `<h3 class="text-xl font-semibold text-gray-900 mb-4">Regime Detection</h3>
-       <p class="text-gray-600 mb-6">Three fractal metrics combine into a unified risk score that detects market regime changes:</p>
-       <div class="space-y-4">
-         <div class="flex items-center justify-between p-4 bg-surface-50 rounded-xl">
-           <div><p class="font-medium text-gray-900">Volatility Percentile</p><p class="text-sm text-gray-500">Where is vol vs history?</p></div>
-           <span class="font-mono text-lg text-brand-600">0.336</span>
-         </div>
-         <div class="flex items-center justify-between p-4 bg-surface-50 rounded-xl">
-           <div><p class="font-medium text-gray-900">Hill Alpha (Tail Risk)</p><p class="text-sm text-gray-500">How fat are the tails?</p></div>
-           <span class="font-mono text-lg text-brand-600">2.83</span>
-         </div>
-         <div class="flex items-center justify-between p-4 bg-surface-50 rounded-xl">
-           <div><p class="font-medium text-gray-900">Hurst Exponent</p><p class="text-sm text-gray-500">Trending or mean-reverting?</p></div>
-           <span class="font-mono text-lg text-brand-600">0.485</span>
-         </div>
-       </div>`,
-      `<h3 class="text-xl font-semibold text-gray-900 mb-4">Allocation Signals</h3>
-       <p class="text-gray-600 mb-6">Each month you receive a clear allocation target. No guessing, no discretion:</p>
-       <div class="space-y-4">
-         <div class="p-4 bg-green-50 rounded-xl border border-green-100">
-           <div class="flex justify-between items-center"><span class="font-medium text-green-800">LOW Risk</span><span class="text-2xl font-bold text-green-700">100%</span></div>
-           <p class="text-sm text-green-600 mt-1">Full equity allocation</p>
-         </div>
-         <div class="p-4 bg-amber-50 rounded-xl border border-amber-100">
-           <div class="flex justify-between items-center"><span class="font-medium text-amber-800">MID Risk</span><span class="text-2xl font-bold text-amber-700">80%</span></div>
-           <p class="text-sm text-amber-600 mt-1">Reduced equity, increased bonds</p>
-         </div>
-         <div class="p-4 bg-orange-50 rounded-xl border border-orange-100">
-           <div class="flex justify-between items-center"><span class="font-medium text-orange-800">HIGH Risk</span><span class="text-2xl font-bold text-orange-700">50%</span></div>
-           <p class="text-sm text-orange-600 mt-1">Defensive positioning</p>
-         </div>
-       </div>`,
-      `<h3 class="text-xl font-semibold text-gray-900 mb-4">Macro Overlay (Quad)</h3>
-       <p class="text-gray-600 mb-6">The Quad system adds macro context for sector allocation:</p>
-       <div class="grid grid-cols-2 gap-3">
-         <div class="p-4 bg-blue-50 rounded-xl text-center"><p class="font-bold text-blue-700">Q1</p><p class="text-sm text-blue-600">Goldilocks</p><p class="text-xs text-gray-500 mt-1">Growth↑ Infl↓</p></div>
-         <div class="p-4 bg-amber-50 rounded-xl text-center"><p class="font-bold text-amber-700">Q2</p><p class="text-sm text-amber-600">Reflation</p><p class="text-xs text-gray-500 mt-1">Growth↑ Infl↑</p></div>
-         <div class="p-4 bg-purple-50 rounded-xl text-center"><p class="font-bold text-purple-700">Q4</p><p class="text-sm text-purple-600">Deflation</p><p class="text-xs text-gray-500 mt-1">Growth↓ Infl↓</p></div>
-         <div class="p-4 bg-red-50 rounded-xl text-center"><p class="font-bold text-red-700">Q3</p><p class="text-sm text-red-600">Stagflation</p><p class="text-xs text-gray-500 mt-1">Growth↓ Infl↑</p></div>
-       </div>
-       <p class="text-sm text-gray-500 mt-4">Current: <span class="font-semibold text-blue-600">Q1 Goldilocks</span> - Favor tech & growth</p>`,
-      `<h3 class="text-xl font-semibold text-gray-900 mb-4">Full Transparency</h3>
-       <p class="text-gray-600 mb-6">Every signal comes with complete explanation. No black boxes:</p>
-       <div class="bg-surface-50 rounded-xl p-4 font-mono text-sm space-y-2">
-         <p class="text-gray-500">// January 2026 Signal</p>
-         <p><span class="text-gray-500">risk_score:</span> <span class="text-brand-600">0.583</span></p>
-         <p><span class="text-gray-500">threshold_mid:</span> 0.536</p>
-         <p><span class="text-gray-500">threshold_high:</span> 0.678</p>
-         <p><span class="text-gray-500">regime:</span> <span class="text-amber-600">"MID"</span></p>
-         <p><span class="text-gray-500">equity_target:</span> <span class="text-green-600">0.80</span></p>
-         <p class="text-gray-400 mt-4">// Score above median (0.536) but below</p>
-         <p class="text-gray-400">// 75th percentile (0.678) → MID regime</p>
-       </div>`
-    ];
-    
-    function setActiveFeature(idx) {
-      document.querySelectorAll('.feature-item').forEach((el, i) => {
-        el.classList.toggle('active', i === idx);
-        el.querySelector('.feature-title').className = 'feature-title text-lg font-medium ' + (i === idx ? 'text-gray-900' : 'text-gray-500');
-      });
-      document.getElementById('feature-preview').innerHTML = featureContents[idx];
-    }
-    
-    // Equity chart
+    // ============================================
+    // EQUITY CHART
+    // ============================================
     const ctx = document.getElementById('equityChart').getContext('2d');
     
     const years = [];
@@ -923,7 +907,6 @@
     for(let i = 1; i < years.length; i++) {
       const date = years[i];
       let frarRet, spyRet;
-      
       if(crisisPeriods[date]) {
         frarRet = crisisPeriods[date].frar;
         spyRet = crisisPeriods[date].spy;
@@ -932,7 +915,6 @@
         spyRet = 0.0085 + noise;
         frarRet = 0.009 + noise * 0.7;
       }
-      
       spy *= (1 + spyRet);
       frar *= (1 + frarRet);
       spyData.push(spy);
@@ -945,22 +927,23 @@
         labels: years.filter((_, i) => i % 12 === 0),
         datasets: [
           {
-            label: 'FRAR Strategy',
+            label: 'SteadyGuard',
             data: frarData.filter((_, i) => i % 12 === 0),
-            borderColor: '#0ea5e9',
+            borderColor: '#4fd1c5',
             borderWidth: 3,
             fill: false,
             pointRadius: 0,
-            tension: 0.1
+            tension: 0.2
           },
           {
-            label: 'S&P 500 (SPY)',
+            label: 'S&P 500',
             data: spyData.filter((_, i) => i % 12 === 0),
-            borderColor: '#9ca3af',
-            borderWidth: 2.5,
+            borderColor: '#627d98',
+            borderWidth: 2,
+            borderDash: [6, 3],
             fill: false,
             pointRadius: 0,
-            tension: 0.1
+            tension: 0.2
           }
         ]
       },
@@ -970,7 +953,11 @@
         plugins: {
           legend: { display: false },
           tooltip: {
-            backgroundColor: '#1e293b',
+            backgroundColor: '#243b53',
+            titleColor: '#d9e2ec',
+            bodyColor: '#d9e2ec',
+            borderColor: 'rgba(79, 209, 197, 0.3)',
+            borderWidth: 1,
             titleFont: { size: 14, weight: 'bold' },
             bodyFont: { size: 13 },
             padding: 12,
@@ -983,165 +970,109 @@
         },
         scales: {
           x: {
-            grid: { color: 'rgba(0,0,0,0.05)' },
-            ticks: { 
-              color: '#64748b',
-              font: { size: 13 }
-            }
+            grid: { color: 'rgba(159, 179, 200, 0.06)' },
+            ticks: { color: '#627d98', font: { size: 12 } }
           },
           y: {
-            grid: { color: 'rgba(0,0,0,0.05)' },
+            grid: { color: 'rgba(159, 179, 200, 0.06)' },
             ticks: { 
-              color: '#64748b',
-              font: { size: 13 },
-              callback: function(value) {
-                return '$' + (value/1000).toFixed(0) + 'k';
-              }
+              color: '#627d98',
+              font: { size: 12 },
+              callback: function(value) { return '$' + (value/1000).toFixed(0) + 'k'; }
             }
           }
         }
       }
     });
-    
-    // ===========================================
-    // LIVE SIGNAL FETCH FROM DASHBOARD
-    // ===========================================
+
+    // ============================================
+    // LIVE SIGNAL FETCH
+    // ============================================
     const DASHBOARD_URL = 'https://bvecchiarelli19-bot.github.io/FRAR_DASHBOARD/outputs';
     
     const REGIME_STYLES = {
-      LOW: { badge: 'regime-LOW', dot: 'bg-green-500', color: 'bg-green-400' },
-      MID: { badge: 'regime-MID', dot: 'bg-amber-500', color: 'bg-amber-400' },
-      HIGH: { badge: 'regime-HIGH', dot: 'bg-orange-500', color: 'bg-orange-400' },
-      CRISIS: { badge: 'regime-CRISIS', dot: 'bg-red-500', color: 'bg-red-400' }
+      LOW:    { badge: 'regime-LOW',    dot: 'bg-green-400',  fill: 'bg-green-400' },
+      MID:    { badge: 'regime-MID',    dot: 'bg-yellow-400', fill: 'bg-yellow-400' },
+      HIGH:   { badge: 'regime-HIGH',   dot: 'bg-orange-400', fill: 'bg-orange-400' },
+      CRISIS: { badge: 'regime-CRISIS', dot: 'bg-red-400',    fill: 'bg-red-400' }
     };
-    
-    const EQUITY_MAP = { LOW: 100, MID: 80, HIGH: 50, CRISIS: 20 };
+
+    const REGIME_LABELS = { LOW: 'CALM', MID: 'CAUTIOUS', HIGH: 'RISKY', CRISIS: 'CRISIS' };
     
     async function fetchLiveSignal() {
       try {
-        // Fetch quad_signal.json (has most data we need)
         const quadRes = await fetch(`${DASHBOARD_URL}/quad_signal.json?v=${Date.now()}`);
         const quadData = await quadRes.json();
-        
-        // Fetch metrics.json for performance stats
         const metricsRes = await fetch(`${DASHBOARD_URL}/metrics.json?v=${Date.now()}`);
         const metricsData = await metricsRes.json();
         
-        // Extract data
         const regime = quadData.frar?.regime || 'MID';
-        const quadRegime = quadData.quad?.regime || 1;
         const riskScore = quadData.frar?.risk_score || 0.5;
         const volPct = quadData.frar?.vol_percentile || 0.5;
         const equityAlloc = quadData.frar?.equity_allocation || 0.8;
         const signalDate = quadData.date || 'Unknown';
-        
-        // Get performance metrics
         const frarNet = metricsData.strategies?.FRAR_Quad_Net || {};
         const sharpe = frarNet.sharpe || 0.84;
         const cagr = frarNet.cagr || 0.1128;
         
-        // Update DOM
-        updateSignalDisplay({
-          regime,
-          quadRegime,
-          riskScore,
-          volPct,
-          equityAlloc,
-          signalDate,
-          sharpe,
-          cagr
-        });
-        
+        updateSignalDisplay({ regime, riskScore, volPct, equityAlloc, signalDate, sharpe, cagr });
       } catch (err) {
         console.log('Could not fetch live signal, using defaults:', err);
-        // Fallback to reasonable defaults - already shown
       }
     }
     
     function updateSignalDisplay(data) {
       const style = REGIME_STYLES[data.regime] || REGIME_STYLES.MID;
+      const label = REGIME_LABELS[data.regime] || 'CAUTIOUS';
       
-      // Format date nicely
       const dateObj = new Date(data.signalDate + 'T00:00:00');
-      const formattedDate = dateObj.toLocaleDateString('en-US', { 
-        month: 'long', 
-        day: 'numeric', 
-        year: 'numeric' 
-      });
-      
-      // Calculate next signal date (2nd of next month)
+      const formattedDate = dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
       const nextMonth = new Date(dateObj);
       nextMonth.setMonth(nextMonth.getMonth() + 1);
       nextMonth.setDate(2);
-      const nextSignalDate = nextMonth.toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-      });
+      const nextSignalDate = nextMonth.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
       
-      // Update signal date
       document.getElementById('signal-date').textContent = formattedDate;
       
-      // Update regime badge
       const regimeBadge = document.getElementById('regime-badge');
       regimeBadge.className = `regime-badge ${style.badge}`;
       document.getElementById('regime-dot').className = `w-2 h-2 rounded-full ${style.dot}`;
-      document.getElementById('regime-text').textContent = `${data.regime} RISK`;
+      document.getElementById('regime-text').textContent = label;
       
-      // Update stats
       const equityPct = Math.round(data.equityAlloc * 100);
       document.getElementById('equity-pct').textContent = `${equityPct}%`;
       document.getElementById('sharpe-val').textContent = data.sharpe.toFixed(2);
       document.getElementById('cagr-val').textContent = `${(data.cagr * 100).toFixed(1)}%`;
       
-      // Macro phase names (no Q1/Q2/Q3/Q4)
-      const phaseNames = { 1: 'Goldilocks', 2: 'Reflation', 3: 'Stagflation', 4: 'Deflation' };
-      const phaseColors = { 1: 'text-blue-600', 2: 'text-amber-600', 3: 'text-red-600', 4: 'text-purple-600' };
-      const quadValEl = document.getElementById('quad-val');
-      quadValEl.textContent = phaseNames[data.quadRegime] || 'Goldilocks';
-      quadValEl.className = `stat-value ${phaseColors[data.quadRegime] || 'text-blue-600'}`;
-      quadValEl.style.fontSize = '1.1rem';
-      
-      // Update risk score
       document.getElementById('risk-score-val').textContent = data.riskScore.toFixed(3);
       document.getElementById('risk-score-bar').style.width = `${data.riskScore * 100}%`;
-      document.getElementById('risk-score-bar').className = `progress-fill ${style.color}`;
+      document.getElementById('risk-score-bar').className = `progress-fill ${style.fill}`;
       
-      // Update vol percentile
       document.getElementById('vol-pct-val').textContent = data.volPct.toFixed(3);
       document.getElementById('vol-pct-bar').style.width = `${data.volPct * 100}%`;
       
-      // Update next signal
       document.getElementById('next-signal').textContent = `Next signal: ${nextSignalDate}`;
       
-      // Update CTA section signal display
       const ctaRegimeBadge = document.getElementById('cta-regime-badge');
       ctaRegimeBadge.className = `regime-badge ${style.badge}`;
       document.getElementById('cta-regime-dot').className = `w-2 h-2 rounded-full ${style.dot}`;
-      document.getElementById('cta-regime-text').textContent = `${data.regime} RISK`;
+      document.getElementById('cta-regime-text').textContent = label;
       document.getElementById('cta-equity-pct').textContent = equityPct;
       document.getElementById('cta-signal-date').textContent = `Signal as of ${formattedDate}`;
-      
-      // Update Macro Regime section display
-      const quadDisplay = document.getElementById('quad-current-display');
-      if (quadDisplay) {
-        quadDisplay.textContent = phaseNames[data.quadRegime] || 'Goldilocks';
-        quadDisplay.className = 'font-semibold ' + (phaseColors[data.quadRegime] || 'text-blue-600');
-      }
     }
     
-    // Fetch on page load
     fetchLiveSignal();
-    
-    // ===========================================
-    // END LIVE SIGNAL
-    // ===========================================
-    
-    // Form handling
+
+    // ============================================
+    // FORM HANDLING
+    // ============================================
     function handleSubscribe(e) {
       e.preventDefault();
-      const email = document.getElementById('email-input').value;
-      console.log('Subscribed:', email);
+      document.getElementById('success-modal').classList.remove('hidden');
+    }
+    
+    function handleToolWaitlist(e) {
+      e.preventDefault();
       document.getElementById('success-modal').classList.remove('hidden');
     }
     
@@ -1154,9 +1085,7 @@
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        if(target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
   </script>
