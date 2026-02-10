@@ -261,13 +261,31 @@
         </div>
         <div class="hidden md:flex items-center gap-8">
           <a href="#proof" class="nav-link">Results</a>
+          <a href="#backtest" class="nav-link">Backtest</a>
           <a href="#how-it-works" class="nav-link">How It Works</a>
           <a href="#methodology" class="nav-link">Methodology</a>
           <a href="#faq" class="nav-link">FAQ</a>
         </div>
-        <a href="#subscribe" class="cta-primary px-5 py-2.5 rounded-full text-sm">
-          Get Started
-        </a>
+        <div class="flex items-center gap-4">
+          <a href="#subscribe" class="cta-primary px-5 py-2.5 rounded-full text-sm hidden sm:inline-block">
+            Get Started
+          </a>
+          <button onclick="toggleMobileMenu()" class="md:hidden text-white p-2" aria-label="Menu">
+            <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-white/10 pt-4">
+        <div class="flex flex-col gap-4">
+          <a href="#proof" class="nav-link" onclick="toggleMobileMenu()">Results</a>
+          <a href="#backtest" class="nav-link" onclick="toggleMobileMenu()">Backtest</a>
+          <a href="#how-it-works" class="nav-link" onclick="toggleMobileMenu()">How It Works</a>
+          <a href="#methodology" class="nav-link" onclick="toggleMobileMenu()">Methodology</a>
+          <a href="#faq" class="nav-link" onclick="toggleMobileMenu()">FAQ</a>
+          <a href="#subscribe" class="cta-primary px-5 py-2.5 rounded-full text-sm text-center mt-2" onclick="toggleMobileMenu()">Get Started</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -300,7 +318,7 @@
           <div class="flex items-center gap-6 text-sm text-navy-300 fade-up fade-up-d4">
             <span class="flex items-center gap-2">
               <svg class="trust-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-              18-year backtest
+              19-year backtest
             </span>
             <span class="flex items-center gap-2">
               <svg class="trust-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
@@ -334,7 +352,7 @@
               </div>
               <div class="text-center p-4 bg-navy-900/50 rounded-xl">
                 <p class="text-3xl font-bold text-accent-400" id="sharpe-val">--</p>
-                <p class="text-[11px] text-navy-400 mt-1 uppercase tracking-wider">Sharpe</p>
+                <p class="text-[11px] text-navy-400 mt-1 uppercase tracking-wider">Max DD</p>
               </div>
               <div class="text-center p-4 bg-navy-900/50 rounded-xl">
                 <p class="text-3xl font-bold text-green-400" id="cagr-val">--%</p>
@@ -441,9 +459,9 @@
         <div class="mt-6 pt-5 border-t border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <p class="text-xs text-navy-400">Past performance does not guarantee future results. Backtest includes transaction costs.</p>
           <div class="text-right text-sm">
-            <span class="text-accent-400 font-semibold">SteadyGuard: ~$78,000</span>
+            <span class="text-accent-400 font-semibold">SteadyGuard: $73,783</span>
             <span class="text-navy-400 mx-2">•</span>
-            <span class="text-navy-300">S&P 500: ~$72,000</span>
+            <span class="text-navy-300">S&P 500: $69,496</span>
           </div>
         </div>
       </div>
@@ -463,38 +481,38 @@
           Built for the <span class="italic text-danger-400">worst days.</span>
         </h2>
         <p class="text-xl text-navy-200 max-w-2xl mx-auto">
-          A 50% drawdown isn't a "buying opportunity" when you're five years from retirement. It's a crisis. SteadyGuard is built to prevent that.
+          A 51% drawdown isn't a "buying opportunity" when you're five years from retirement. It's a crisis. SteadyGuard is built to prevent that.
         </p>
       </div>
       
       <div class="grid md:grid-cols-3 gap-6">
         <div class="card crisis-accent card-hover p-8">
-          <p class="text-5xl font-serif text-danger-400 mb-3">-55%</p>
+          <p class="text-5xl font-serif text-danger-400 mb-3">-51%</p>
           <h3 class="text-xl font-semibold text-white mb-2">2008 Financial Crisis</h3>
           <p class="text-sm text-navy-300 mb-5">S&P 500 peak-to-trough. Recovery took 4+ years.</p>
           <div class="pt-4 border-t border-white/5">
-            <p class="text-sm text-green-400 font-semibold">SteadyGuard: -28% max drawdown</p>
-            <p class="text-xs text-navy-400 mt-1">Detected high risk before Lehman</p>
+            <p class="text-sm text-green-400 font-semibold">SteadyGuard: -20% drawdown</p>
+            <p class="text-xs text-navy-400 mt-1">Shifted to bonds before the worst of the collapse</p>
           </div>
         </div>
         
         <div class="card crisis-accent card-hover p-8">
-          <p class="text-5xl font-serif text-danger-400 mb-3">-34%</p>
+          <p class="text-5xl font-serif text-danger-400 mb-3">-19%</p>
           <h3 class="text-xl font-semibold text-white mb-2">COVID Crash 2020</h3>
           <p class="text-sm text-navy-300 mb-5">Fastest 30% drop in history. 33 days to the bottom.</p>
           <div class="pt-4 border-t border-white/5">
-            <p class="text-sm text-green-400 font-semibold">SteadyGuard: Reduced exposure in Feb</p>
-            <p class="text-xs text-navy-400 mt-1">Flagged elevated risk before the collapse</p>
+            <p class="text-sm text-green-400 font-semibold">SteadyGuard: -8% drawdown</p>
+            <p class="text-xs text-navy-400 mt-1">Reduced exposure before Feb, fully defensive by March</p>
           </div>
         </div>
         
         <div class="card crisis-accent card-hover p-8">
-          <p class="text-5xl font-serif text-danger-400 mb-3">-25%</p>
+          <p class="text-5xl font-serif text-danger-400 mb-3">-24%</p>
           <h3 class="text-xl font-semibold text-white mb-2">2022 Bear Market</h3>
           <p class="text-sm text-navy-300 mb-5">Stocks AND bonds fell together. Diversification failed.</p>
           <div class="pt-4 border-t border-white/5">
-            <p class="text-sm text-green-400 font-semibold">SteadyGuard: Defensive all year</p>
-            <p class="text-xs text-navy-400 mt-1">Reduced exposure throughout 2022</p>
+            <p class="text-sm text-green-400 font-semibold">SteadyGuard: -28% drawdown</p>
+            <p class="text-xs text-navy-400 mt-1">Bonds fell too — the one period where protection was limited</p>
           </div>
         </div>
       </div>
@@ -879,7 +897,7 @@
   <!-- ============================================ -->
   <footer class="py-16 px-6 border-t border-white/5">
     <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <div class="grid md:grid-cols-3 gap-12 mb-12">
         <div>
           <div class="flex items-center gap-3 mb-4">
             <div class="shield-icon">
@@ -896,26 +914,18 @@
           <h4 class="font-semibold text-navy-300 mb-4 uppercase text-[11px] tracking-widest">Product</h4>
           <ul class="space-y-3 text-sm text-navy-400">
             <li><a href="#proof" class="hover:text-white transition">Results</a></li>
+            <li><a href="#backtest" class="hover:text-white transition">Backtest Tool</a></li>
             <li><a href="#how-it-works" class="hover:text-white transition">How It Works</a></li>
             <li><a href="#methodology" class="hover:text-white transition">Methodology</a></li>
-            <li><a href="https://bvecchiarelli19-bot.github.io/FRAR_DASHBOARD/" target="_blank" class="hover:text-white transition">Live Dashboard</a></li>
+            <li><a href="https://bvecchiarelli19-bot.github.io/FRAR_DASHBOARD/" target="_blank" class="hover:text-white transition">Live Dashboard ↗</a></li>
           </ul>
         </div>
         
         <div>
-          <h4 class="font-semibold text-navy-300 mb-4 uppercase text-[11px] tracking-widest">Company</h4>
+          <h4 class="font-semibold text-navy-300 mb-4 uppercase text-[11px] tracking-widest">Contact</h4>
           <ul class="space-y-3 text-sm text-navy-400">
-            <li><a href="#" class="hover:text-white transition">About</a></li>
-            <li><a href="#" class="hover:text-white transition">Contact</a></li>
-          </ul>
-        </div>
-        
-        <div>
-          <h4 class="font-semibold text-navy-300 mb-4 uppercase text-[11px] tracking-widest">Legal</h4>
-          <ul class="space-y-3 text-sm text-navy-400">
-            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
-            <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
-            <li><a href="#" class="hover:text-white transition">Disclaimer</a></li>
+            <li><a href="#subscribe" class="hover:text-white transition">Get Signal Updates</a></li>
+            <li><a href="#faq" class="hover:text-white transition">FAQ</a></li>
           </ul>
         </div>
       </div>
@@ -940,59 +950,32 @@
   </div>
 
   <script>
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('menu-icon');
+      const closeIcon = document.getElementById('close-icon');
+      menu.classList.toggle('hidden');
+      menuIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
+    }
+
     // ============================================
-    // EQUITY CHART
+    // EQUITY CHART (Real Data)
     // ============================================
+    const PROOF_LABELS = ["2007-01","2007-02","2007-03","2007-04","2007-05","2007-06","2007-07","2007-08","2007-09","2007-10","2007-11","2007-12","2008-01","2008-02","2008-03","2008-04","2008-05","2008-06","2008-07","2008-08","2008-09","2008-10","2008-11","2008-12","2009-01","2009-02","2009-03","2009-04","2009-05","2009-06","2009-07","2009-08","2009-09","2009-10","2009-11","2009-12","2010-01","2010-02","2010-03","2010-04","2010-05","2010-06","2010-07","2010-08","2010-09","2010-10","2010-11","2010-12","2011-01","2011-02","2011-03","2011-04","2011-05","2011-06","2011-07","2011-08","2011-09","2011-10","2011-11","2011-12","2012-01","2012-02","2012-03","2012-04","2012-05","2012-06","2012-07","2012-08","2012-09","2012-10","2012-11","2012-12","2013-01","2013-02","2013-03","2013-04","2013-05","2013-06","2013-07","2013-08","2013-09","2013-10","2013-11","2013-12","2014-01","2014-02","2014-03","2014-04","2014-05","2014-06","2014-07","2014-08","2014-09","2014-10","2014-11","2014-12","2015-01","2015-02","2015-03","2015-04","2015-05","2015-06","2015-07","2015-08","2015-09","2015-10","2015-11","2015-12","2016-01","2016-02","2016-03","2016-04","2016-05","2016-06","2016-07","2016-08","2016-09","2016-10","2016-11","2016-12","2017-01","2017-02","2017-03","2017-04","2017-05","2017-06","2017-07","2017-08","2017-09","2017-10","2017-11","2017-12","2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08","2019-09","2019-10","2019-11","2019-12","2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01"];
+    const PROOF_SG = [10150,9951,9922,10187,10238,10095,9910,10069,10279,10447,10528,10447,10243,9973,9884,10355,10512,9633,9547,9694,8781,8457,9348,10430,9345,8515,9166,9759,10328,10321,11091,11501,11908,11679,12399,12636,12177,12556,13321,13527,12452,11808,12614,12365,13470,13985,13985,14920,15267,15798,15800,16257,16075,15804,15488,14636,15921,15801,15965,16213,16806,17532,18096,17975,16895,17581,17789,18235,18697,18357,18460,18625,19579,19829,20581,20977,21472,21186,22280,21612,22296,23329,24020,24643,23774,24856,25062,25237,25822,26355,26001,27027,26654,27282,28040,28173,28047,28947,28650,28926,29298,28703,29351,27562,27117,27450,27291,26891,26114,26780,27658,27700,28126,28219,29159,29130,29125,28620,29675,30276,30818,32029,32069,32387,32845,33054,33733,33832,34513,35327,36406,36848,38925,37509,38153,37858,38713,38959,39987,41256,41501,38633,39339,38691,40313,40683,41718,42909,40164,42959,43609,42879,43312,43989,45228,46533,46514,42831,44955,46652,46487,46939,49374,49761,49052,47653,50621,51247,50075,50589,51879,54336,54625,56096,57623,58958,56199,60142,59659,61620,58557,57003,58107,52948,52157,50821,52770,50484,46107,44521,47374,45420,48624,47162,49045,49715,49609,52814,54542,53656,51111,50001,54569,57060,57969,60994,62988,60449,63506,65747,66543,68098,69528,68262,71804,70062,71627,71707,67697,67110,66102,68218,67912,68995,71439,73142,73285,72926,73783];
+    const PROOF_SPY = [10150,9951,10067,10513,10869,10710,10375,10508,10915,11063,10634,10515,9879,9624,9538,9992,10143,9295,9212,9354,8473,7074,6581,6646,6100,5445,5898,6484,6863,6859,7370,7643,7914,7761,8240,8397,8092,8344,8852,8989,8275,7847,8383,8006,8723,9056,9056,9661,9886,10230,10231,10527,10409,10234,10029,9478,8820,9782,9743,9844,10301,10748,11094,11020,10358,10778,10906,11179,11462,11254,11317,11419,12003,12156,12618,12860,13164,12988,13659,13250,13669,14302,14726,15108,14575,15239,15365,15472,15831,16158,15940,16570,16341,16726,17185,17142,16634,17569,17293,17463,17687,17328,17719,16639,16215,17594,17658,17353,16489,16476,17584,17653,17954,18016,18673,18695,18696,18372,19049,19435,19783,20560,20586,20790,21084,21218,21654,21718,22155,22677,23370,23654,24987,24078,23418,23539,24112,24250,25149,25951,26106,24302,24753,22573,24380,25171,25626,26673,24972,26710,27114,26660,27179,27779,28785,29621,29609,27265,23861,26891,28172,28671,30360,32479,31263,30483,33799,35051,34694,35659,37278,39250,39508,40394,41380,42612,40626,43476,43127,45121,42742,41480,43039,39262,39350,36105,39430,37821,34325,37115,39178,36920,39242,38255,39674,40308,40494,43118,44529,43805,41727,40822,44550,46584,47326,49796,51425,49351,51847,53677,54326,55596,56764,56257,59612,58178,59740,58982,55695,55212,58682,61698,63119,64414,66708,68298,68432,68486,69496];
+
     const ctx = document.getElementById('equityChart').getContext('2d');
-    
-    const years = [];
-    for(let y = 2007; y <= 2026; y++) {
-      for(let m = 1; m <= 12; m++) {
-        if(y === 2026 && m > 1) break;
-        years.push(`${y}-${m.toString().padStart(2,'0')}`);
-      }
-    }
-    
-    let frar = 10000, spy = 10000;
-    const frarData = [frar], spyData = [spy];
-    
-    const crisisPeriods = {
-      '2008-09': { spy: -0.17, frar: -0.08 },
-      '2008-10': { spy: -0.17, frar: -0.09 },
-      '2008-11': { spy: -0.07, frar: -0.03 },
-      '2020-02': { spy: -0.08, frar: -0.05 },
-      '2020-03': { spy: -0.13, frar: -0.07 },
-      '2022-01': { spy: -0.05, frar: -0.03 },
-      '2022-04': { spy: -0.09, frar: -0.05 },
-      '2022-06': { spy: -0.08, frar: -0.04 },
-      '2022-09': { spy: -0.09, frar: -0.05 },
-    };
-    
-    for(let i = 1; i < years.length; i++) {
-      const date = years[i];
-      let frarRet, spyRet;
-      if(crisisPeriods[date]) {
-        frarRet = crisisPeriods[date].frar;
-        spyRet = crisisPeriods[date].spy;
-      } else {
-        const noise = (Math.random() - 0.5) * 0.04;
-        spyRet = 0.0085 + noise;
-        frarRet = 0.009 + noise * 0.7;
-      }
-      spy *= (1 + spyRet);
-      frar *= (1 + frarRet);
-      spyData.push(spy);
-      frarData.push(frar);
-    }
-    
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: years.filter((_, i) => i % 12 === 0),
+        labels: PROOF_LABELS,
         datasets: [
           {
             label: 'SteadyGuard',
-            data: frarData.filter((_, i) => i % 12 === 0),
+            data: PROOF_SG,
             borderColor: '#4fd1c5',
             borderWidth: 3,
             fill: false,
@@ -1001,7 +984,7 @@
           },
           {
             label: 'S&P 500',
-            data: spyData.filter((_, i) => i % 12 === 0),
+            data: PROOF_SPY,
             borderColor: '#627d98',
             borderWidth: 2,
             borderDash: [6, 3],
@@ -1035,7 +1018,15 @@
         scales: {
           x: {
             grid: { color: 'rgba(159, 179, 200, 0.06)' },
-            ticks: { color: '#627d98', font: { size: 12 } }
+            ticks: {
+              color: '#627d98',
+              font: { size: 12 },
+              maxTicksLimit: 12,
+              callback: function(val, idx) {
+                const label = this.getLabelForValue(val);
+                return label.endsWith('-01') ? label.slice(0, 4) : '';
+              }
+            }
           },
           y: {
             grid: { color: 'rgba(159, 179, 200, 0.06)' },
@@ -1067,19 +1058,17 @@
       try {
         const quadRes = await fetch(`${DASHBOARD_URL}/quad_signal.json?v=${Date.now()}`);
         const quadData = await quadRes.json();
-        const metricsRes = await fetch(`${DASHBOARD_URL}/metrics.json?v=${Date.now()}`);
-        const metricsData = await metricsRes.json();
         
         const regime = quadData.frar?.regime || 'MID';
         const riskScore = quadData.frar?.risk_score || 0.5;
         const volPct = quadData.frar?.vol_percentile || 0.5;
         const equityAlloc = quadData.frar?.equity_allocation || 0.8;
         const signalDate = quadData.date || 'Unknown';
-        const frarNet = metricsData.strategies?.FRAR_Quad_Net || {};
-        const sharpe = frarNet.sharpe || 0.70;
-        const cagr = frarNet.cagr || 0.1128;
+        // Use signal-only backtest metrics (not quad system)
+        const maxDD = -27.7;
+        const cagr = 0.110;
         
-        updateSignalDisplay({ regime, riskScore, volPct, equityAlloc, signalDate, sharpe, cagr });
+        updateSignalDisplay({ regime, riskScore, volPct, equityAlloc, signalDate, maxDD, cagr });
       } catch (err) {
         console.log('Could not fetch live signal, using defaults:', err);
       }
@@ -1105,7 +1094,7 @@
       
       const equityPct = Math.round(data.equityAlloc * 100);
       document.getElementById('equity-pct').textContent = `${equityPct}%`;
-      document.getElementById('sharpe-val').textContent = data.sharpe.toFixed(2);
+      document.getElementById('sharpe-val').textContent = `${data.maxDD}%`;
       document.getElementById('cagr-val').textContent = `${(data.cagr * 100).toFixed(1)}%`;
       
       document.getElementById('risk-score-val').textContent = data.riskScore.toFixed(3);
@@ -1131,11 +1120,6 @@
     // FORM HANDLING
     // ============================================
     function handleSubscribe(e) {
-      e.preventDefault();
-      document.getElementById('success-modal').classList.remove('hidden');
-    }
-    
-    function handleToolWaitlist(e) {
       e.preventDefault();
       document.getElementById('success-modal').classList.remove('hidden');
     }
