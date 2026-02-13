@@ -1261,11 +1261,44 @@
     fetchLiveSignal();
 
     // ============================================
-    // FORM HANDLING
+    // FORM HANDLING (via Cloudflare Worker proxy)
     // ============================================
-    function handleSubscribe(e) {
+    // IMPORTANT: Update this URL after deploying your Cloudflare Worker
+    const SUBSCRIBE_ENDPOINT = 'https://steadyguard-api.bvecchiarelli19.workers.dev/subscribe';
+    
+    async function handleSubscribe(e) {
       e.preventDefault();
-      document.getElementById('success-modal').classList.remove('hidden');
+      const emailInput = document.getElementById('email-input');
+      const email = emailInput.value.trim();
+      if (!email) return;
+      
+      const btn = e.target.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+      
+      try {
+        const res = await fetch(SUBSCRIBE_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+          document.getElementById('success-modal').classList.remove('hidden');
+          emailInput.value = '';
+        } else {
+          alert(data.message || 'Something went wrong. Please try again.');
+        }
+      } catch (err) {
+        alert('Connection error. Please try again.');
+        console.error('Subscribe error:', err);
+      } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
     }
     
     function closeModal() {
