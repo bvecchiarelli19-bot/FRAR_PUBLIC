@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — SteadyGuard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 50:'#e6f1fe',100:'#cce3fd',200:'#99c7fb',300:'#66aaf9',400:'#486581',500:'#334e68',600:'#243b53',700:'#1a2f45',800:'#102a43',900:'#0a1929',950:'#060f1a' },
+            accent: { 400:'#4fd1c5',500:'#38b2ac',600:'#319795' }
+          },
+          fontFamily: { sans:['Inter','sans-serif'], serif:['Lora','serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background: #060f1a; }
+    .legal-content h2 { font-size: 1.25rem; font-weight: 600; color: #fff; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .legal-content h3 { font-size: 1rem; font-weight: 600; color: #cce3fd; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .legal-content p, .legal-content li { color: #8daab9; line-height: 1.8; margin-bottom: 0.75rem; }
+    .legal-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+    .legal-content strong { color: #fff; }
+  </style>
+</head>
+<body class="font-sans text-navy-200 antialiased">
+  <!-- Nav -->
+  <nav class="fixed w-full top-0 z-50 bg-navy-950/80 backdrop-blur-xl border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-accent-400 flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#102a43" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <span class="text-white font-semibold text-lg">SteadyGuard</span>
+      </a>
+      <a href="index.html" class="text-sm text-navy-400 hover:text-white transition">← Back to Home</a>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="pt-32 pb-20 px-6">
+    <div class="max-w-3xl mx-auto legal-content">
+      <p class="text-accent-400 text-xs uppercase tracking-widest font-semibold mb-4">Legal</p>
+      <h1 class="text-4xl font-serif text-white mb-2">Privacy Policy</h1>
+      <p class="text-navy-400 text-sm mb-12">Last updated: February 2026</p>
+
+      <h2>1. Introduction</h2>
+      <p>SteadyGuard ("we," "our," or "us") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and protect your information when you use our website and services.</p>
+
+      <h2>2. Information We Collect</h2>
+      <h3>Information You Provide</h3>
+      <ul>
+        <li><strong>Account Information:</strong> Email address, name (if provided), password</li>
+        <li><strong>Payment Information:</strong> Processed securely through our payment provider (e.g., Stripe). We do not store your full credit card number.</li>
+        <li><strong>Communications:</strong> Any messages you send us via email or contact forms</li>
+      </ul>
+      <h3>Information Collected Automatically</h3>
+      <ul>
+        <li><strong>Usage Data:</strong> Pages visited, time spent on site, features used</li>
+        <li><strong>Device Information:</strong> Browser type, operating system, device type</li>
+        <li><strong>Log Data:</strong> IP address, access times, referring URLs</li>
+      </ul>
+
+      <h2>3. How We Use Your Information</h2>
+      <p>We use your information to:</p>
+      <ul>
+        <li>Provide and maintain the Service</li>
+        <li>Send you monthly signals and alerts (if subscribed)</li>
+        <li>Process payments and manage subscriptions</li>
+        <li>Respond to your inquiries and support requests</li>
+        <li>Improve and optimize the Service</li>
+        <li>Send important updates about the Service (e.g., changes to Terms)</li>
+      </ul>
+
+      <h2>4. Email Communications</h2>
+      <p>By signing up for SteadyGuard, you agree to receive:</p>
+      <ul>
+        <li>Monthly signal emails (core service)</li>
+        <li>Important service announcements</li>
+        <li>Occasional product updates</li>
+      </ul>
+      <p>You may unsubscribe from non-essential emails at any time by clicking the unsubscribe link in any email.</p>
+
+      <h2>5. Data Sharing</h2>
+      <p><strong>We do NOT sell your personal information.</strong></p>
+      <p>We may share your data only with:</p>
+      <ul>
+        <li><strong>Payment Processors:</strong> To process transactions (e.g., Stripe, Brevo)</li>
+        <li><strong>Service Providers:</strong> That help us operate the Service (e.g., email delivery, hosting)</li>
+        <li><strong>Legal Requirements:</strong> If required by law or to protect our rights</li>
+      </ul>
+
+      <h2>6. Data Security</h2>
+      <p>We implement reasonable security measures to protect your personal information, including:</p>
+      <ul>
+        <li>Encrypted data transmission (HTTPS)</li>
+        <li>Secure password storage</li>
+        <li>Limited access to personal data</li>
+      </ul>
+      <p>However, no method of transmission over the internet is 100% secure. We cannot guarantee absolute security.</p>
+
+      <h2>7. Data Retention</h2>
+      <p>We retain your personal information for as long as your account is active or as needed to provide the Service. If you cancel your account, we will delete or anonymize your data within 90 days, except where we are required to retain it for legal purposes.</p>
+
+      <h2>8. Your Rights</h2>
+      <p>You have the right to:</p>
+      <ul>
+        <li><strong>Access:</strong> Request a copy of your personal data</li>
+        <li><strong>Correction:</strong> Request correction of inaccurate data</li>
+        <li><strong>Deletion:</strong> Request deletion of your data</li>
+        <li><strong>Opt-out:</strong> Unsubscribe from marketing emails</li>
+      </ul>
+      <p>To exercise these rights, contact us at: <a href="mailto:BenjaminVecchiarelli2026@lschs.org" class="text-accent-400 hover:underline">BenjaminVecchiarelli2026@lschs.org</a></p>
+
+      <h2>9. Cookies</h2>
+      <p>We use cookies and similar technologies to:</p>
+      <ul>
+        <li>Keep you signed in</li>
+        <li>Remember your preferences</li>
+        <li>Analyze site usage</li>
+      </ul>
+      <p>You can control cookies through your browser settings, but disabling them may affect site functionality.</p>
+
+      <h2>10. Third-Party Links</h2>
+      <p>Our Service may contain links to third-party websites. We are not responsible for the privacy practices of those sites. We encourage you to read their privacy policies.</p>
+
+      <h2>11. Children's Privacy</h2>
+      <p>SteadyGuard is not intended for users under 18 years of age. We do not knowingly collect personal information from children under 18.</p>
+
+      <h2>12. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last updated" date. Your continued use of the Service after changes constitutes acceptance of the updated policy.</p>
+
+      <h2>13. Contact Us</h2>
+      <p>Questions about this Privacy Policy? Contact us at: <a href="mailto:BenjaminVecchiarelli2026@lschs.org" class="text-accent-400 hover:underline">BenjaminVecchiarelli2026@lschs.org</a></p>
+
+      <div class="mt-12 pt-8 border-t border-white/5">
+        <p class="text-navy-400 text-sm">By using SteadyGuard, you acknowledge that you have read and understood this Privacy Policy.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-8 px-6">
+    <div class="max-w-3xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-navy-500">
+      <p>© 2026 SteadyGuard. All rights reserved.</p>
+      <div class="flex gap-6">
+        <a href="terms.html" class="hover:text-white transition">Terms</a>
+        <a href="privacy.html" class="hover:text-white transition">Privacy</a>
+        <a href="index.html" class="hover:text-white transition">Home</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
