@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service — SteadyGuard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 50:'#e6f1fe',100:'#cce3fd',200:'#99c7fb',300:'#66aaf9',400:'#486581',500:'#334e68',600:'#243b53',700:'#1a2f45',800:'#102a43',900:'#0a1929',950:'#060f1a' },
+            accent: { 400:'#4fd1c5',500:'#38b2ac',600:'#319795' }
+          },
+          fontFamily: { sans:['Inter','sans-serif'], serif:['Lora','serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background: #060f1a; }
+    .legal-content h2 { font-size: 1.25rem; font-weight: 600; color: #fff; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .legal-content p, .legal-content li { color: #8daab9; line-height: 1.8; margin-bottom: 0.75rem; }
+    .legal-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+    .legal-content strong { color: #fff; }
+    .legal-caps { text-transform: uppercase; font-size: 0.875rem; letter-spacing: 0.02em; }
+  </style>
+</head>
+<body class="font-sans text-navy-200 antialiased">
+  <!-- Nav -->
+  <nav class="fixed w-full top-0 z-50 bg-navy-950/80 backdrop-blur-xl border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-accent-400 flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#102a43" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <span class="text-white font-semibold text-lg">SteadyGuard</span>
+      </a>
+      <a href="index.html" class="text-sm text-navy-400 hover:text-white transition">← Back to Home</a>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="pt-32 pb-20 px-6">
+    <div class="max-w-3xl mx-auto legal-content">
+      <p class="text-accent-400 text-xs uppercase tracking-widest font-semibold mb-4">Legal</p>
+      <h1 class="text-4xl font-serif text-white mb-2">Terms of Service</h1>
+      <p class="text-navy-400 text-sm mb-12">Last updated: February 2026</p>
+
+      <h2>1. Agreement to Terms</h2>
+      <p>By accessing or using SteadyGuard ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service.</p>
+
+      <h2>2. Description of Service</h2>
+      <p>SteadyGuard provides market risk signals and educational information about portfolio allocation strategies. The Service includes:</p>
+      <ul>
+        <li>Monthly regime signals (Calm / Cautious / Risky / Crisis)</li>
+        <li>Recommended equity allocation percentages</li>
+        <li>Historical signal archives (for paid subscribers)</li>
+        <li>Portfolio backtesting tools (for Pro subscribers)</li>
+      </ul>
+
+      <h2>3. Not Financial Advice</h2>
+      <p class="legal-caps"><strong>THE SERVICE DOES NOT PROVIDE PERSONALIZED INVESTMENT ADVICE.</strong></p>
+      <p>SteadyGuard is an informational and educational service only. The signals, data, and content provided are for general informational purposes and should not be construed as personalized investment advice, a recommendation to buy or sell any security, or an offer to provide investment advisory services.</p>
+      <p>You should consult with a qualified financial advisor, accountant, or attorney before making any investment decisions. SteadyGuard is not a registered investment advisor, broker-dealer, or financial planner.</p>
+
+      <h2>4. No Guarantee of Results</h2>
+      <p>Past performance does not guarantee future results. Backtested results are hypothetical and do not represent actual trading. Actual results may vary significantly from backtested or historical performance.</p>
+      <p>All investments involve risk, including the possible loss of principal. SteadyGuard makes no guarantees regarding the accuracy of signals or the performance of any investment strategy.</p>
+
+      <h2>5. Subscription and Payment</h2>
+      <ul>
+        <li><strong>Free Trial:</strong> 14 days, no credit card required</li>
+        <li><strong>Base Plan:</strong> $9/month or $79/year</li>
+        <li><strong>Pro Plan:</strong> $29/month or $249/year</li>
+      </ul>
+      <p>Subscriptions renew automatically unless canceled. You may cancel at any time through your account settings. Refunds are not provided for partial subscription periods.</p>
+
+      <h2>6. User Responsibilities</h2>
+      <p>You agree to:</p>
+      <ul>
+        <li>Provide accurate information when creating an account</li>
+        <li>Keep your login credentials secure</li>
+        <li>Use the Service for lawful purposes only</li>
+        <li>Not redistribute, resell, or share subscription content</li>
+      </ul>
+
+      <h2>7. Intellectual Property</h2>
+      <p>All content, signals, methodologies, and materials provided through SteadyGuard are the intellectual property of SteadyGuard and may not be copied, reproduced, or distributed without permission.</p>
+
+      <h2>8. Limitation of Liability</h2>
+      <p class="legal-caps"><strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW, STEADYGUARD SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, OR OTHER INTANGIBLE LOSSES, RESULTING FROM YOUR USE OF THE SERVICE.</strong></p>
+      <p class="legal-caps"><strong>IN NO EVENT SHALL STEADYGUARD'S TOTAL LIABILITY EXCEED THE AMOUNT YOU PAID FOR THE SERVICE IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM.</strong></p>
+
+      <h2>9. Disclaimer of Warranties</h2>
+      <p class="legal-caps"><strong>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</strong></p>
+
+      <h2>10. Changes to Terms</h2>
+      <p>We reserve the right to modify these Terms at any time. Changes will be posted on this page with an updated "Last updated" date. Your continued use of the Service after changes constitutes acceptance of the new Terms.</p>
+
+      <h2>11. Termination</h2>
+      <p>We may terminate or suspend your access to the Service at any time, without notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties.</p>
+
+      <h2>12. Governing Law</h2>
+      <p>These Terms shall be governed by the laws of the Commonwealth of Pennsylvania, without regard to conflict of law principles.</p>
+
+      <h2>13. Contact</h2>
+      <p>Questions about these Terms? Contact us at: <a href="mailto:BenjaminVecchiarelli2026@lschs.org" class="text-accent-400 hover:underline">BenjaminVecchiarelli2026@lschs.org</a></p>
+
+      <div class="mt-12 pt-8 border-t border-white/5">
+        <p class="text-navy-400 text-sm">By using SteadyGuard, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-8 px-6">
+    <div class="max-w-3xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-navy-500">
+      <p>© 2026 SteadyGuard. All rights reserved.</p>
+      <div class="flex gap-6">
+        <a href="terms.html" class="hover:text-white transition">Terms</a>
+        <a href="privacy.html" class="hover:text-white transition">Privacy</a>
+        <a href="index.html" class="hover:text-white transition">Home</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
