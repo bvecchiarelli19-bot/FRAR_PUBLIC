@@ -755,25 +755,37 @@
   <!-- WHAT YOU GET — Offering clarity               -->
   <!-- ============================================ -->
   <section id="pricing" class="py-28 px-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-16">
-        <p class="section-label mb-4">WHAT YOU GET</p>
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="section-label mb-4">PRICING</p>
         <h2 class="text-4xl lg:text-5xl font-serif text-white mb-6">
           Start free. <span class="italic text-accent-400">Upgrade when ready.</span>
         </h2>
-        <p class="text-xl text-navy-200 max-w-2xl mx-auto">
-          The core signal is free. As we build more tools, paying members will get deeper analysis and custom portfolio features.
+        <p class="text-xl text-navy-200 max-w-2xl mx-auto mb-10">
+          Try SteadyGuard risk-free for 14 days. No credit card required.
         </p>
+        
+        <!-- Annual/Monthly Toggle -->
+        <div class="inline-flex items-center gap-3 bg-navy-800 rounded-full p-1.5 border border-white/10">
+          <button id="toggle-monthly" onclick="setPricingPeriod('monthly')" class="px-5 py-2 rounded-full text-sm font-medium transition bg-accent-500/20 text-accent-400">
+            Monthly
+          </button>
+          <button id="toggle-annual" onclick="setPricingPeriod('annual')" class="px-5 py-2 rounded-full text-sm font-medium transition text-navy-400 hover:text-navy-200">
+            Annual <span class="text-green-400 text-xs ml-1">Save 25%+</span>
+          </button>
+        </div>
       </div>
       
-      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <!-- Free Tier -->
+      <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        
+        <!-- Free Trial -->
         <div class="card p-8 card-hover">
-          <div class="flex items-center justify-between mb-6">
-            <h3 class="text-2xl font-serif text-white">Signal</h3>
-            <span class="text-3xl font-bold text-accent-400">Free</span>
+          <h3 class="text-2xl font-serif text-white mb-2">Free Trial</h3>
+          <p class="text-navy-400 text-sm mb-6">No credit card required</p>
+          <div class="mb-6">
+            <span class="text-4xl font-bold text-white">$0</span>
+            <span class="text-navy-400 text-sm ml-1">for 14 days</span>
           </div>
-          <p class="text-navy-300 text-sm mb-8">Everything you need to protect your portfolio.</p>
           <ul class="space-y-4 mb-8">
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
@@ -787,54 +799,66 @@
               <svg class="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
               <span class="text-navy-200 text-sm">Email delivery on the 2nd of each month</span>
             </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-navy-200 text-sm">Access to interactive backtest tool</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-navy-200 text-sm">Full methodology transparency</span>
-            </li>
           </ul>
-          <a href="#subscribe" class="cta-primary block text-center px-6 py-3.5 rounded-xl text-sm">
-            Get the Signal →
+          <a href="#subscribe" class="cta-primary block text-center px-6 py-3.5 rounded-xl text-sm font-medium">
+            Try Free for 14 Days →
           </a>
         </div>
         
-        <!-- Pro Tier -->
-        <div class="card p-8 card-hover border-accent-500/20 relative overflow-hidden">
-          <div class="absolute top-0 right-0 bg-accent-500/15 text-accent-400 text-[11px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-bl-xl">
-            Coming Soon
+        <!-- Base -->
+        <div class="card p-8 card-hover">
+          <h3 class="text-2xl font-serif text-white mb-2">Base</h3>
+          <p class="text-navy-400 text-sm mb-6">The essentials for staying protected</p>
+          <div class="mb-6">
+            <span class="text-4xl font-bold text-white pricing-amount" data-monthly="9" data-annual="79">$9</span>
+            <span class="text-navy-400 text-sm ml-1 pricing-period">/month</span>
+            <p class="text-green-400 text-xs mt-1 pricing-savings hidden">$79/year — save 25%</p>
           </div>
-          <div class="flex items-center justify-between mb-6">
-            <h3 class="text-2xl font-serif text-white">Pro</h3>
-            <span class="text-navy-400 text-sm">Pricing TBD</span>
-          </div>
-          <p class="text-navy-300 text-sm mb-8">Deeper analysis for serious portfolio protection.</p>
+          <p class="text-navy-400 text-xs mb-4 uppercase tracking-wider font-semibold">Everything in Free Trial, plus:</p>
           <ul class="space-y-4 mb-8">
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-navy-200 text-sm">Everything in Signal, plus:</span>
+              <span class="text-navy-200 text-sm">Historical signal archive</span>
             </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-navy-200 text-sm">Methodology breakdown</span>
+            </li>
+          </ul>
+          <a href="#subscribe" class="block text-center px-6 py-3.5 rounded-xl text-sm font-medium bg-navy-800 border border-white/10 text-navy-200 hover:border-accent-400/30 transition">
+            Get Started →
+          </a>
+        </div>
+        
+        <!-- Pro (Recommended) -->
+        <div class="card p-8 card-hover border-accent-500/30 relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-accent-500/20 text-accent-400 text-[11px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-bl-xl">
+            Best Value
+          </div>
+          <h3 class="text-2xl font-serif text-white mb-2">Pro</h3>
+          <p class="text-navy-400 text-sm mb-6">Full protection with custom analysis</p>
+          <div class="mb-6">
+            <span class="text-4xl font-bold text-accent-400 pricing-amount" data-monthly="29" data-annual="249">$29</span>
+            <span class="text-navy-400 text-sm ml-1 pricing-period">/month</span>
+            <p class="text-green-400 text-xs mt-1 pricing-savings hidden">$249/year — save 28%</p>
+          </div>
+          <p class="text-navy-400 text-xs mb-4 uppercase tracking-wider font-semibold">Everything in Base, plus:</p>
+          <ul class="space-y-4 mb-8">
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
               <span class="text-navy-200 text-sm">Custom portfolio backtest — enter your own tickers &amp; weights</span>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-navy-200 text-sm">Monthly risk breakdown email with all three indicator readings</span>
+              <span class="text-navy-200 text-sm">Detailed monthly risk breakdown email — not just the signal, but why</span>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-navy-200 text-sm">Historical signal archive &amp; downloadable data</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-navy-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-navy-400 text-sm">TradingView signal integration</span>
+              <span class="text-navy-200 text-sm">Priority access to new features</span>
             </li>
           </ul>
-          <a href="#subscribe" class="block text-center px-6 py-3.5 rounded-xl text-sm bg-navy-800 border border-white/10 text-navy-300 hover:border-accent-400/30 transition">
-            Join Waitlist for Pro
+          <a href="#subscribe" class="cta-primary block text-center px-6 py-3.5 rounded-xl text-sm font-medium">
+            Get Started →
           </a>
         </div>
       </div>
@@ -1102,6 +1126,29 @@
       menu.classList.toggle('hidden');
       menuIcon.classList.toggle('hidden');
       closeIcon.classList.toggle('hidden');
+    }
+
+    // Pricing toggle
+    function setPricingPeriod(period) {
+      const monthlyBtn = document.getElementById('toggle-monthly');
+      const annualBtn = document.getElementById('toggle-annual');
+      const amounts = document.querySelectorAll('.pricing-amount');
+      const periods = document.querySelectorAll('.pricing-period');
+      const savings = document.querySelectorAll('.pricing-savings');
+      
+      if (period === 'annual') {
+        monthlyBtn.className = 'px-5 py-2 rounded-full text-sm font-medium transition text-navy-400 hover:text-navy-200';
+        annualBtn.className = 'px-5 py-2 rounded-full text-sm font-medium transition bg-accent-500/20 text-accent-400';
+        amounts.forEach(el => { el.textContent = '$' + el.dataset.annual; });
+        periods.forEach(el => { el.textContent = '/year'; });
+        savings.forEach(el => { el.classList.remove('hidden'); });
+      } else {
+        monthlyBtn.className = 'px-5 py-2 rounded-full text-sm font-medium transition bg-accent-500/20 text-accent-400';
+        annualBtn.className = 'px-5 py-2 rounded-full text-sm font-medium transition text-navy-400 hover:text-navy-200';
+        amounts.forEach(el => { el.textContent = '$' + el.dataset.monthly; });
+        periods.forEach(el => { el.textContent = '/month'; });
+        savings.forEach(el => { el.classList.add('hidden'); });
+      }
     }
 
     // ============================================
