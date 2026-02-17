@@ -618,12 +618,6 @@
         </div>
       </div>
       
-      <!-- Trend Filter -->
-      <div class="card p-8 mb-8 max-w-3xl mx-auto">
-        <h4 class="text-white font-semibold text-lg mb-3">Trend Filter</h4>
-        <p class="text-navy-200 text-sm leading-relaxed">In addition to volatility, tail risk, and trend persistence, SteadyGuard uses a trend filter based on the 10-month moving average. When the market falls below this trend line, the system automatically increases defensive positioning, ensuring protection during slow, grinding bear markets like 2000–2002, not just sharp crashes.</p>
-      </div>
-      
       <!-- Four Regimes — Plain English -->
       <div class="card p-8">
         <h4 class="text-center text-[11px] font-bold text-navy-400 uppercase tracking-widest mb-8">Market Condition → Your Allocation</h4>
@@ -1298,7 +1292,7 @@ const PROOF_SPY = [10104, 10832, 11386, 11501, 11301, 11756, 11620, 9940, 10573,
         const signalDate = quadData.date || 'Unknown';
         // Use signal-only backtest metrics (not quad system)
         const maxDD = -21.0;
-        const cagr = 0.110;
+        const cagr = 0.0881;
         
         updateSignalDisplay({ regime, riskScore, volPct, equityAlloc, signalDate, maxDD, cagr });
       } catch (err) {
