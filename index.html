@@ -211,27 +211,6 @@
     ::-webkit-scrollbar-thumb { background: #334e68; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #486581; }
 
-    .bt-btn {
-      padding: 8px 18px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      background: rgba(36, 59, 83, 0.6);
-      border: 1px solid rgba(159, 179, 200, 0.15);
-      color: #9fb3c8;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-    .bt-btn:hover {
-      border-color: rgba(79, 209, 197, 0.4);
-      color: #d9e2ec;
-    }
-    .bt-btn.active {
-      background: rgba(79, 209, 197, 0.15);
-      border-color: #4fd1c5;
-      color: #4fd1c5;
-    }
-
     .shield-icon {
       width: 36px;
       height: 36px;
@@ -691,75 +670,100 @@
   <section id="backtest" class="py-28 px-6">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-12">
-        <p class="section-label mb-4">TRY IT YOURSELF</p>
+        <p class="section-label mb-4">THE COMPARISON</p>
         <h2 class="text-4xl lg:text-5xl font-serif text-white mb-6">
-          Pick a portfolio.<br>
-          <span class="italic text-accent-400">See the difference.</span>
+          Stop choosing between<br>
+          <span class="italic text-accent-400">growth and safety.</span>
         </h2>
         <p class="text-xl text-navy-200 max-w-2xl mx-auto">
-          Choose your portfolio type below and see exactly how SteadyGuard would have protected it through every crash since 1998.
+          The 60/40 portfolio solves drawdowns by sacrificing returns. SteadyGuard solves drawdowns while keeping you in stocks.
         </p>
       </div>
       
-      <!-- Portfolio Selector -->
+      <!-- Comparison Table -->
       <div class="card p-8 mb-8">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-          <div>
-            <h3 class="text-lg font-semibold text-white mb-1">Select Your Portfolio</h3>
-            <p class="text-sm text-navy-300">Choose the allocation closest to yours</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <!-- 100% Stocks -->
+          <div class="bg-navy-900/60 rounded-xl p-6 border border-white/5">
+            <p class="text-[11px] text-navy-400 uppercase tracking-widest font-semibold mb-3">Scenario 1</p>
+            <h3 class="text-lg font-semibold text-white mb-1">100% Stocks</h3>
+            <p class="text-xs text-navy-400 mb-6">No protection. Buy and hold SPY.</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-[11px] text-navy-400 uppercase tracking-widest">Annual Return</p>
+                <p class="text-2xl font-bold text-white">11.40%</p>
+              </div>
+              <div>
+                <p class="text-[11px] text-navy-400 uppercase tracking-widest">Worst Drawdown</p>
+                <p class="text-2xl font-bold text-danger-400">-55.19%</p>
+              </div>
+            </div>
           </div>
-          <div class="flex flex-wrap gap-3" id="portfolio-selector">
-            <button onclick="runBacktest(100)" class="bt-btn active" id="btn-100">100% Stocks</button>
-            <button onclick="runBacktest(80)" class="bt-btn" id="btn-80">80/20</button>
-            <button onclick="runBacktest(60)" class="bt-btn" id="btn-60">60/40</button>
-            <button onclick="runBacktest(40)" class="bt-btn" id="btn-40">40/60</button>
+          
+          <!-- 60/40 -->
+          <div class="bg-navy-900/60 rounded-xl p-6 border border-white/5">
+            <p class="text-[11px] text-navy-400 uppercase tracking-widest font-semibold mb-3">Scenario 2</p>
+            <h3 class="text-lg font-semibold text-white mb-1">60/40 Portfolio</h3>
+            <p class="text-xs text-navy-400 mb-6">Traditional protection. Sacrifices returns.</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-[11px] text-navy-400 uppercase tracking-widest">Annual Return</p>
+                <p class="text-2xl font-bold text-white">8.12%</p>
+              </div>
+              <div>
+                <p class="text-[11px] text-navy-400 uppercase tracking-widest">Worst Drawdown</p>
+                <p class="text-2xl font-bold text-yellow-400">-32.66%</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 100% Stocks + SteadyGuard -->
+          <div class="bg-navy-900/60 rounded-xl p-6 border border-accent-500/30 relative">
+            <div class="absolute top-0 right-0 bg-accent-500/20 text-accent-400 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-xl">Best of both</div>
+            <p class="text-[11px] text-accent-400 uppercase tracking-widest font-semibold mb-3">Scenario 3</p>
+            <h3 class="text-lg font-semibold text-white mb-1">Stocks + SteadyGuard</h3>
+            <p class="text-xs text-navy-400 mb-6">Full equity exposure, dynamic risk management.</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-[11px] text-accent-400 uppercase tracking-widest">Annual Return</p>
+                <p class="text-2xl font-bold text-accent-400">10.37%</p>
+              </div>
+              <div>
+                <p class="text-[11px] text-accent-400 uppercase tracking-widest">Worst Drawdown</p>
+                <p class="text-2xl font-bold text-accent-400">-32.79%</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Results Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="bt-stats">
-          <div class="bg-navy-900/60 rounded-xl p-4 text-center">
-            <p class="text-[11px] text-navy-400 uppercase tracking-widest mb-1">Your Max Drawdown</p>
-            <p class="text-2xl font-bold text-danger-400" id="bt-dd-without">--</p>
-          </div>
-          <div class="bg-navy-900/60 rounded-xl p-4 text-center border border-accent-500/20">
-            <p class="text-[11px] text-accent-400 uppercase tracking-widest mb-1">With SteadyGuard</p>
-            <p class="text-2xl font-bold text-accent-400" id="bt-dd-with">--</p>
-          </div>
-          <div class="bg-navy-900/60 rounded-xl p-4 text-center">
-            <p class="text-[11px] text-navy-400 uppercase tracking-widest mb-1">Your Return</p>
-            <p class="text-2xl font-bold text-white" id="bt-ret-without">--</p>
-          </div>
-          <div class="bg-navy-900/60 rounded-xl p-4 text-center border border-accent-500/20">
-            <p class="text-[11px] text-accent-400 uppercase tracking-widest mb-1">With SteadyGuard</p>
-            <p class="text-2xl font-bold text-accent-400" id="bt-ret-with">--</p>
-          </div>
-        </div>
-
-        <!-- Backtest Chart -->
+        <!-- Growth Chart -->
         <div class="h-80 md:h-96">
           <canvas id="backtestChart"></canvas>
         </div>
         
         <div class="mt-6 pt-5 border-t border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-          <p class="text-xs text-navy-400">Backtest uses actual SteadyGuard alerts from 1998–2026. Includes transaction costs. Past performance ≠ future results.</p>
-          <div class="flex items-center gap-5 text-sm">
-            <span class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-navy-400"></span>
-              <span class="text-navy-300">Without SteadyGuard</span>
-            </span>
+          <p class="text-xs text-navy-400">January 2003 – January 2026. Uses SPY and TLT with monthly rebalancing. Past performance ≠ future results.</p>
+          <div class="flex items-center gap-5 text-sm flex-wrap">
             <span class="flex items-center gap-2">
               <span class="w-3 h-3 rounded-full bg-accent-400"></span>
-              <span class="text-navy-200">With SteadyGuard</span>
+              <span class="text-navy-200">Stocks + SteadyGuard</span>
+            </span>
+            <span class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-navy-400"></span>
+              <span class="text-navy-300">100% Stocks</span>
+            </span>
+            <span class="flex items-center gap-2">
+              <span class="w-3 h-0.5 bg-yellow-400/60"></span>
+              <span class="text-navy-300">60/40</span>
             </span>
           </div>
         </div>
       </div>
       
-      <!-- Key Insight Callout -->
-      <div class="card p-6 max-w-2xl mx-auto text-center" id="bt-insight">
-        <p class="text-lg text-navy-100" id="bt-insight-text">
-          Select a portfolio above to see your personalized backtest results.
+      <!-- Key Insight -->
+      <div class="card p-6 max-w-3xl mx-auto text-center">
+        <p class="text-lg text-navy-100">
+          <strong class="text-white">The bottom line:</strong> SteadyGuard matched the 60/40's drawdown protection (-32.79% vs -32.66%) while delivering <strong class="text-accent-400">2.25% more annual return</strong>. Over 23 years, that compounds to tens of thousands in additional wealth.
         </p>
       </div>
     </div>
@@ -1393,83 +1397,47 @@ const PROOF_SPY = [10104, 10832, 11386, 11501, 11301, 11756, 11620, 9940, 10573,
 
     let backtestChartInstance = null;
 
-    function runBacktest(stockPct) {
-      // Update button states
-      document.querySelectorAll('.bt-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(`btn-${stockPct}`).classList.add('active');
+    function runComparison() {
+      // Compute 3 scenarios from 2003-01 to 2026-01
+      let val100 = 100000, val6040 = 100000, valSG = 100000;
+      let peak100 = 100000, peak6040 = 100000, peakSG = 100000;
+      let maxDd100 = 0, maxDd6040 = 0, maxDdSG = 0;
 
-      const bondPct = 100 - stockPct;
-      const stockW = stockPct / 100;
-      const bondW = bondPct / 100;
-
-      // Run both simulations
-      let valWithout = 10000;
-      let valWith = 10000;
-      let peakWithout = 10000;
-      let peakWith = 10000;
-      let maxDdWithout = 0;
-      let maxDdWith = 0;
-
-      const labels = ['1998-01'];
-      const curveWithout = [10000];
-      const curveWith = [10000];
+      const labels = ['2003-01'];
+      const curve100 = [100000], curve6040 = [100000], curveSG = [100000];
+      let prevScalar = 1.0;
 
       for (const m of MONTHLY_DATA) {
-        if (m.d < '1998-01') continue;
+        if (m.d < '2003-01') continue;
 
-        // WITHOUT SteadyGuard: fixed allocation
-        const retWithout = stockW * m.s + bondW * m.b;
-        valWithout *= (1 + retWithout);
-        peakWithout = Math.max(peakWithout, valWithout);
-        const ddWithout = (valWithout - peakWithout) / peakWithout;
-        maxDdWithout = Math.min(maxDdWithout, ddWithout);
+        // 100% Stocks
+        val100 *= (1 + m.s);
+        peak100 = Math.max(peak100, val100);
+        maxDd100 = Math.min(maxDd100, (val100 - peak100) / peak100);
 
-        // WITH SteadyGuard: dynamic allocation
-        // SteadyGuard scales the STOCK portion down based on regime.
-        // For equity-heavy portfolios (>60% stocks): freed equity goes to bonds
-        // For bond-heavy portfolios (<=60% stocks): freed equity goes to cash (0% return)
-        const sgStockW = stockW * m.scalar;
-        const freedW = stockW - sgStockW; // portion moved out of stocks
-        let retWith;
-        if (stockPct <= 60) {
-          // Cash buffer: bonds stay at original weight, freed portion earns 0
-          retWith = sgStockW * m.s + bondW * m.b;
-        } else {
-          // Bond buffer: freed stock allocation goes to bonds
-          retWith = sgStockW * m.s + (bondW + freedW) * m.b;
-        }
-        // Subtract small transaction cost when allocation changes
-        valWith *= (1 + retWith - 0.001 * Math.abs(m.scalar - (MONTHLY_DATA[MONTHLY_DATA.indexOf(m) - 1]?.scalar || m.scalar)));
-        peakWith = Math.max(peakWith, valWith);
-        const ddWith = (valWith - peakWith) / peakWith;
-        maxDdWith = Math.min(maxDdWith, ddWith);
+        // 60/40
+        const ret6040 = 0.6 * m.s + 0.4 * m.b;
+        val6040 *= (1 + ret6040);
+        peak6040 = Math.max(peak6040, val6040);
+        maxDd6040 = Math.min(maxDd6040, (val6040 - peak6040) / peak6040);
+
+        // 100% Stocks + SteadyGuard
+        const sgStockW = m.scalar;
+        const retSG = sgStockW * m.s + (1 - sgStockW) * m.b;
+        const txCost = 0.001 * Math.abs(m.scalar - prevScalar);
+        valSG *= (1 + retSG - txCost);
+        peakSG = Math.max(peakSG, valSG);
+        maxDdSG = Math.min(maxDdSG, (valSG - peakSG) / peakSG);
+        prevScalar = m.scalar;
 
         labels.push(m.d);
-        curveWithout.push(valWithout);
-        curveWith.push(valWith);
+        curve100.push(val100);
+        curve6040.push(val6040);
+        curveSG.push(valSG);
       }
-
-      // Calculate CAGR
-      const years = labels.length / 12;
-      const cagrWithout = (Math.pow(valWithout / 10000, 1 / years) - 1) * 100;
-      const cagrWith = (Math.pow(valWith / 10000, 1 / years) - 1) * 100;
-
-      // Update stats
-      document.getElementById('bt-dd-without').textContent = `${(maxDdWithout * 100).toFixed(1)}%`;
-      document.getElementById('bt-dd-with').textContent = `${(maxDdWith * 100).toFixed(1)}%`;
-      document.getElementById('bt-ret-without').textContent = `${cagrWithout.toFixed(1)}%`;
-      document.getElementById('bt-ret-with').textContent = `${cagrWith.toFixed(1)}%`;
-
-      // Update insight
-      const ddReduction = Math.round((1 - maxDdWith / maxDdWithout) * 100);
-      const portfolioName = stockPct === 100 ? '100% stock' : `${stockPct}/${bondPct}`;
-      document.getElementById('bt-insight-text').innerHTML = `<strong class="text-white">With a ${portfolioName} portfolio:</strong> SteadyGuard reduced your worst drawdown by <strong class="text-accent-400">${ddReduction}%</strong> while delivering <strong class="text-accent-400">${cagrWith.toFixed(1)}%</strong> annualized returns vs ${cagrWithout.toFixed(1)}% without it.`;
 
       // Draw chart
       if (backtestChartInstance) backtestChartInstance.destroy();
-      
-      // Filter to yearly labels for readability
-      const yearlyIdx = labels.map((l, i) => l.endsWith('-01') || i === 0 || i === labels.length - 1 ? i : -1).filter(i => i >= 0);
 
       const btCtx = document.getElementById('backtestChart').getContext('2d');
       backtestChartInstance = new Chart(btCtx, {
@@ -1478,8 +1446,8 @@ const PROOF_SPY = [10104, 10832, 11386, 11501, 11301, 11756, 11620, 9940, 10573,
           labels: labels,
           datasets: [
             {
-              label: 'With SteadyGuard',
-              data: curveWith,
+              label: '100% Stocks + SteadyGuard',
+              data: curveSG,
               borderColor: '#4fd1c5',
               borderWidth: 3,
               fill: false,
@@ -1487,9 +1455,18 @@ const PROOF_SPY = [10104, 10832, 11386, 11501, 11301, 11756, 11620, 9940, 10573,
               tension: 0.2,
             },
             {
-              label: `Without SteadyGuard (${portfolioName})`,
-              data: curveWithout,
+              label: '100% Stocks',
+              data: curve100,
               borderColor: '#627d98',
+              borderWidth: 2,
+              fill: false,
+              pointRadius: 0,
+              tension: 0.2,
+            },
+            {
+              label: '60/40 Portfolio',
+              data: curve6040,
+              borderColor: 'rgba(250, 204, 21, 0.5)',
               borderWidth: 2,
               borderDash: [6, 3],
               fill: false,
@@ -1542,8 +1519,7 @@ const PROOF_SPY = [10104, 10832, 11386, 11501, 11301, 11756, 11620, 9940, 10573,
       });
     }
 
-    // Auto-run with 100% stocks on load
-    runBacktest(100);
+    runComparison();
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
