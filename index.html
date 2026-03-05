@@ -927,6 +927,154 @@
   </section>
 
   <div class="divider"></div>
+  <!-- ============================================ -->
+  <!-- DASHBOARD PREVIEW — Mario's suggestion       -->
+  <!-- ============================================ -->
+  <style>
+    .dash-frame{background:#0a1929;border:1px solid rgba(159,179,200,0.12);border-radius:16px;overflow:hidden;box-shadow:0 0 60px -20px rgba(79,209,197,0.15)}
+    .dash-titlebar{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1.4rem;background:rgba(36,59,83,0.5);border-bottom:1px solid rgba(159,179,200,0.12)}
+    .dash-titlebar-left{display:flex;align-items:center;gap:0.55rem}
+    .dash-shield{width:30px;height:30px;background:linear-gradient(135deg,#4fd1c5,#38b2ac);border-radius:8px;display:flex;align-items:center;justify-content:center}
+    .dash-shield svg{width:16px;height:16px;stroke:#102a43;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .dash-wm{font-size:0.95rem;font-weight:600;color:white}
+    .dash-wm span{font-weight:400;color:#627d98;margin-left:0.25rem}
+    .dash-live{display:flex;align-items:center;gap:0.45rem;font-size:0.72rem;color:#627d98}
+    .dash-live-dot{width:6px;height:6px;background:#68d391;border-radius:50%;box-shadow:0 0 8px #68d391;animation:dashPulse 2.5s ease-in-out infinite}
+    @keyframes dashPulse{0%,100%{opacity:1}50%{opacity:0.3}}
+    .dash-content{padding:1.4rem}
+    .dash-top{display:grid;grid-template-columns:1.15fr 0.85fr;gap:0.9rem;margin-bottom:1.2rem}
+    .dash-inner{background:rgba(36,59,83,0.5);border:1px solid rgba(159,179,200,0.12);border-radius:12px;padding:1.2rem 1.3rem}
+    .dash-card-label{font-size:11px;font-weight:700;color:#627d98;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.65rem}
+    .dash-signal{border-left:3px solid #f6c547}
+    .dash-regime{font-size:2rem;font-weight:700;color:#f6c547;line-height:1;margin-bottom:0.2rem}
+    .dash-desc{font-size:0.82rem;color:#9fb3c8;margin-bottom:0.85rem}
+    .dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0.7rem}
+    .dash-sl{font-size:10px;font-weight:600;color:#627d98;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.12rem}
+    .dash-sv{font-size:0.95rem;font-weight:700}
+    .dash-alloc{display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:3px solid #60a5fa}
+    .dash-alloc .dash-card-label{align-self:flex-start}
+    .dash-ring{position:relative;width:110px;height:110px;margin:0.2rem 0 0.4rem 0}
+    .dash-ring svg{transform:rotate(-90deg)}
+    .dash-ring-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+    .dash-ring-pct{font-size:1.4rem;font-weight:700;color:white;line-height:1}
+    .dash-ring-sub{font-size:10px;color:#627d98;text-transform:uppercase;letter-spacing:0.05em}
+    .dash-legend{display:flex;gap:1rem;font-size:0.72rem;color:#9fb3c8}
+    .dash-legend-item{display:flex;align-items:center;gap:0.3rem}
+    .dash-dot{width:8px;height:8px;border-radius:2px}
+    @keyframes dashRing{from{stroke-dasharray:0 276.5}}
+    .dash-metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.65rem;margin-bottom:1.2rem}
+    .dash-m{background:rgba(36,59,83,0.5);border:1px solid rgba(159,179,200,0.12);border-radius:12px;padding:0.9rem 0.85rem;transition:all 0.35s cubic-bezier(0.4,0,0.2,1)}
+    .dash-m:hover{transform:translateY(-3px);border-color:rgba(79,209,197,0.3);box-shadow:0 15px 40px -15px rgba(79,209,197,0.15)}
+    .dash-m-name{font-size:10px;font-weight:600;color:#627d98;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
+    .dash-m-gauge{height:6px;border-radius:3px;background:rgba(159,179,200,0.15);overflow:hidden;margin-bottom:0.5rem}
+    .dash-m-fill{height:100%;border-radius:3px}
+    .dash-m-row{display:flex;justify-content:space-between;align-items:baseline}
+    .dash-m-val{font-size:1.05rem;font-weight:700;color:white}
+    .dash-m-tag{font-size:0.65rem;color:#627d98}
+    .dash-m-desc{font-size:0.68rem;color:#627d98;margin-top:0.25rem;line-height:1.35}
+    .dash-tl{display:flex;gap:4px;margin-bottom:0.4rem}
+    .dash-tl-mo{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+    .dash-tl-cell{width:100%;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:600;transition:transform 0.2s ease}
+    .dash-tl-cell:hover{transform:translateY(-3px)}
+    .dash-tl-date{font-size:0.55rem;color:#627d98}
+    .dtl-low{background:rgba(72,187,120,0.15);color:#68d391}
+    .dtl-mid{background:rgba(246,197,71,0.15);color:#f6c547}
+    .dtl-crisis{background:rgba(245,101,101,0.15);color:#fc8181}
+    .dtl-now{border:1.5px solid #f6c547}
+    .dash-tl-legend{display:flex;gap:1.2rem;font-size:0.65rem;color:#9fb3c8;padding-top:0.2rem}
+    .dash-tl-legend-item{display:flex;align-items:center;gap:0.3rem}
+    .dash-tl-swatch{width:9px;height:9px;border-radius:3px}
+    .dash-cta-area{text-align:center;padding:1.5rem 2rem 0.8rem}
+    .dash-cta-text{font-size:0.85rem;color:#9fb3c8;margin-bottom:0.7rem;line-height:1.5}
+    @media(max-width:700px){.dash-top{grid-template-columns:1fr}.dash-metrics-grid{grid-template-columns:repeat(2,1fr)}.dash-stats{grid-template-columns:repeat(2,1fr)}}
+  </style>
+
+  <section class="py-20 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="section-label mb-4">SUBSCRIBER DASHBOARD</p>
+        <h2 class="text-4xl lg:text-5xl font-serif text-white mb-6">
+          See what drives <span class="italic text-accent-400">every alert.</span>
+        </h2>
+        <p class="text-xl text-navy-200 max-w-2xl mx-auto">
+          Subscribers get a live dashboard with the current signal, all four risk metrics, and a full history of regime changes. Here's a preview.
+        </p>
+      </div>
+
+      <div class="dash-frame">
+        <div class="dash-titlebar">
+          <div class="dash-titlebar-left">
+            <div class="dash-shield"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="dash-wm">SteadyGuard <span>Dashboard</span></div>
+          </div>
+          <div class="dash-live"><div class="dash-live-dot"></div>Updated Jan 2026</div>
+        </div>
+        <div class="dash-content">
+          <div class="dash-top">
+            <div class="dash-inner dash-signal">
+              <div class="dash-card-label">Current Risk Regime</div>
+              <div class="dash-regime">MID</div>
+              <div class="dash-desc">Cautious — elevated uncertainty detected by V3c composite</div>
+              <div class="dash-stats">
+                <div><div class="dash-sl">Scalar</div><div class="dash-sv" style="color:#f6c547">0.80×</div></div>
+                <div><div class="dash-sl">Action</div><div class="dash-sv" style="color:#9fb3c8;font-size:0.85rem">Reduce 20%</div></div>
+                <div><div class="dash-sl">SPY</div><div class="dash-sv" style="color:#68d391">+1.47%</div></div>
+                <div><div class="dash-sl">Bonds</div><div class="dash-sv" style="color:#fc8181">−0.02%</div></div>
+              </div>
+            </div>
+            <div class="dash-inner dash-alloc">
+              <div class="dash-card-label">Your Allocation This Month</div>
+              <div class="dash-ring">
+                <svg width="110" height="110" viewBox="0 0 110 110">
+                  <circle cx="55" cy="55" r="44" fill="none" stroke="rgba(159,179,200,0.12)" stroke-width="9"/>
+                  <circle cx="55" cy="55" r="44" fill="none" stroke="#60a5fa" stroke-width="9" stroke-dasharray="221 276.5" stroke-linecap="round" style="animation:dashRing 1s ease-out 0.3s both"/>
+                  <circle cx="55" cy="55" r="44" fill="none" stroke="#f6c547" stroke-width="9" stroke-dasharray="55.3 276.5" stroke-dashoffset="-221" stroke-linecap="round" style="animation:dashRing 1s ease-out 0.6s both"/>
+                </svg>
+                <div class="dash-ring-center"><div class="dash-ring-pct">80%</div><div class="dash-ring-sub">Equity</div></div>
+              </div>
+              <div class="dash-legend">
+                <div class="dash-legend-item"><div class="dash-dot" style="background:#60a5fa"></div>SPY 80%</div>
+                <div class="dash-legend-item"><div class="dash-dot" style="background:#f6c547"></div>TLT 20%</div>
+              </div>
+            </div>
+          </div>
+          <div class="dash-card-label">V3c Risk Metrics — January 2026</div>
+          <div class="dash-metrics-grid">
+            <div class="dash-m"><div class="dash-m-name">Volatility Percentile</div><div class="dash-m-gauge"><div class="dash-m-fill" style="width:62%;background:linear-gradient(90deg,#4fd1c5,#f6c547)"></div></div><div class="dash-m-row"><span class="dash-m-val">62<span style="font-size:0.7rem;color:#627d98">nd</span></span><span class="dash-m-tag">of history</span></div><div class="dash-m-desc">Above median. Clustering of large moves.</div></div>
+            <div class="dash-m"><div class="dash-m-name">Hill Tail Risk (α)</div><div class="dash-m-gauge"><div class="dash-m-fill" style="width:45%;background:#4fd1c5"></div></div><div class="dash-m-row"><span class="dash-m-val">3.21</span><span class="dash-m-tag">moderate</span></div><div class="dash-m-desc">Thin tails. Low extreme-event probability.</div></div>
+            <div class="dash-m"><div class="dash-m-name">Hurst Exponent</div><div class="dash-m-gauge"><div class="dash-m-fill" style="width:54%;background:linear-gradient(90deg,#4fd1c5,#f6c547)"></div></div><div class="dash-m-row"><span class="dash-m-val">0.54</span><span class="dash-m-tag">mild trend</span></div><div class="dash-m-desc">Near random walk. Slight persistence.</div></div>
+            <div class="dash-m"><div class="dash-m-name">Trend Filter (10M SMA)</div><div class="dash-m-gauge"><div class="dash-m-fill" style="width:82%;background:#4fd1c5"></div></div><div class="dash-m-row"><span class="dash-m-val" style="color:#4fd1c5">ABOVE</span><span class="dash-m-tag">bullish</span></div><div class="dash-m-desc">Price above long-term trend.</div></div>
+          </div>
+          <div class="dash-card-label">12-Month Signal History</div>
+          <div class="dash-tl">
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-mid">0.8×</div><div class="dash-tl-date">Feb</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-low">1.0×</div><div class="dash-tl-date">Mar</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-mid">0.8×</div><div class="dash-tl-date">Apr</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-crisis">0.2×</div><div class="dash-tl-date">May</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-crisis">0.2×</div><div class="dash-tl-date">Jun</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-crisis">0.2×</div><div class="dash-tl-date">Jul</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-mid">0.8×</div><div class="dash-tl-date">Aug</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-low">1.0×</div><div class="dash-tl-date">Sep</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-low">1.0×</div><div class="dash-tl-date">Oct</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-low">1.0×</div><div class="dash-tl-date">Nov</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-mid">0.8×</div><div class="dash-tl-date">Dec</div></div>
+            <div class="dash-tl-mo"><div class="dash-tl-cell dtl-mid dtl-now">0.8×</div><div class="dash-tl-date" style="color:#d9e2ec">Jan ▸</div></div>
+          </div>
+          <div class="dash-tl-legend">
+            <div class="dash-tl-legend-item"><div class="dash-tl-swatch" style="background:rgba(72,187,120,0.4)"></div>LOW · Full exposure</div>
+            <div class="dash-tl-legend-item"><div class="dash-tl-swatch" style="background:rgba(246,197,71,0.4)"></div>MID · Reduce 20%</div>
+            <div class="dash-tl-legend-item"><div class="dash-tl-swatch" style="background:rgba(237,137,54,0.4)"></div>HIGH · Reduce 50%</div>
+            <div class="dash-tl-legend-item"><div class="dash-tl-swatch" style="background:rgba(245,101,101,0.4)"></div>CRISIS · Reduce 80%</div>
+          </div>
+        </div>
+        <div class="dash-cta-area">
+          <div class="dash-cta-text">This is a preview. Subscribers get live signals, full metric history, and allocation guidance every month.</div>
+          <a href="#pricing" class="cta-primary px-8 py-3 rounded-full text-sm">Get Started →</a>
+        </div>
+        <div style="height:0.8rem"></div>
+      </div>
+    </div>
+  </section>
 
   <!-- ============================================ -->
   <!-- FAQ — Rewritten for non-quant audience       -->
